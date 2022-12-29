@@ -16,9 +16,9 @@ jobs:
           DB_USER: ${{ secrets.DB_USER_PROD }}
           DB_PASSWORD: ${{ secrets.DB_PASSWORD_PROD }}
         run: |
-          sed -i -e '/DATABASE_URL/d' -e '$aDATABASE_URL="postgresql://$DB_USER:$DB_PASSWORD@$DB_HOST:5432/$DB_NAME?serverVersion=13&charset=utf8"' api/.env
-          sed -i -e '/APP_ENV/d' -e '$APP_ENV="prod"' api/.env
-          sed -i -e '/APP_DEBUG/d' -e '$APP_DEBUG="0"' api/.env
+          sed -i -e '/DATABASE_URL/d' -e '$aDATABASE_URL='"postgresql://$DB_USER:$DB_PASSWORD@$DB_HOST:5432/$DB_NAME?serverVersion=13&charset=utf8" api/.env
+          sed -i -e '/APP_ENV/d' -e '$APP_ENV='"prod" api/.env
+          sed -i -e '/APP_DEBUG/d' -e '$APP_DEBUG='"0" api/.env
       - name: 📤 Upload to [prod] server
         uses: SamKirkland/FTP-Deploy-Action@4.3.3
         with:
