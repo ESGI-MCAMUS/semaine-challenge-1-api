@@ -14,7 +14,14 @@ jobs:
           DB_USER: ${{ secrets.DB_USER_DEV }}
           DB_PASSWORD: ${{ secrets.DB_PASSWORD_DEV }}
         run: |
-          sed -i "s#DATABASE_URL=.*#DATABASE_URL=postgresql://$DB_USER:$DB_PASSWORD@$DB_HOST:5432/$DB_NAME?serverVersion=13&charset=utf8#g" api/.env
+          awk -v database_url="postgresql://$DB_USER:$DB_PASSWORD@$DB_HOST:5432/$DB_NAME?serverVersion=13&charset=utf8" '
+            {
+              if ($1 == "DATABASE_URL") {
+                $2 = "=" database_url;
+              }
+              print;
+            }' .env > .env.tmp
+          mv .env.tmp .env
           sed -i "s#APP_ENV=.*#APP_ENV=dev#g" api/.env
       - name: 📤 Upload to [dev] server
         uses: SamKirkland/FTP-Deploy-Action@4.3.3
