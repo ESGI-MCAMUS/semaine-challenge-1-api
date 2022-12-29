@@ -22,8 +22,8 @@ jobs:
           server: ${{ secrets.FTP_HOST }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: './api'
-          server-dir: '/api/dev'
+          local-dir: './api/'
+          server-dir: '/api/dev/'
           delete_remote: false
       
           
