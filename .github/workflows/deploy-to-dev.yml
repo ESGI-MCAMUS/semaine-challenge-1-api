@@ -17,13 +17,13 @@ jobs:
           sed -i "s/DATABASE_URL=.*/DATABASE_URL=postgresql://$DB_USER:$DB_PASSWORD@$DB_HOST:5432/$DB_NAME?serverVersion=13&charset=utf8/g" api/.env
           sed -i "s/APP_ENV=.*/APP_ENV=dev" api/.env
       - name: 📤 Upload to [dev] server
-        uses: samuelmeuli/ftp-deploy-action@v1
+        uses: SamKirkland/FTP-Deploy-Action@4.3.3
         with:
-          host: ${{ secrets.FTP_HOST }}
+          server: ${{ secrets.FTP_HOST }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          local_dir: './api'
-          remote_dir: '/api/dev'
+          local-dir: './api'
+          server-dir: '/api/dev'
           delete_remote: false
       
           
