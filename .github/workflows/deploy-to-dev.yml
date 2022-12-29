@@ -20,8 +20,8 @@ jobs:
                 $2 = "=" database_url;
               }
               print;
-            }' .env > .env.tmp
-          mv .env.tmp .env
+            }' ./api/env > ./api/env.tmp
+          mv ./api/env.tmp ./api/env
           sed -i "s#APP_ENV=.*#APP_ENV=dev#g" api/.env
       - name: 📤 Upload to [dev] server
         uses: SamKirkland/FTP-Deploy-Action@4.3.3
