@@ -21,6 +21,11 @@ jobs:
           cd api
           composer install --optimize-autoloader
           cd ..
+      # - name: 🗃️ Make database migrations
+      #   run: |
+      #     cd api
+      #     php bin/console doctrine:migrations:migrate --no-interaction
+      #     cd ..
       - name: 📤 Upload to [dev] server
         uses: SamKirkland/FTP-Deploy-Action@4.3.3
         with:
@@ -29,3 +34,5 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: "./api/"
           server-dir: "/api/dev/"
+      # - name: ✅ Successfull deployed
+      #   run: echo "Deployed to dev server: https://api.challenge-dev.mistergooddeal.org/"
