@@ -2,21 +2,18 @@
     "type": "project",
     "license": "MIT",
     "require": {
-        "php": ">=8.1",
+        "php": ">=8.2",
         "ext-ctype": "*",
         "ext-iconv": "*",
-        "api-platform/core": "^3.0@rc",
-        "composer/package-versions-deprecated": "1.11.99.5",
+        "api-platform/core": "^3.0",
         "doctrine/annotations": "^1.13",
         "doctrine/doctrine-bundle": "^2.7",
         "doctrine/doctrine-migrations-bundle": "^3.2",
         "doctrine/orm": "^2.12",
-        "fakerphp/faker": "^1.20",
         "guzzlehttp/guzzle": "^7.4",
-        "lexik/jwt-authentication-bundle": "^2.16",
+        "lexik/jwt-authentication-bundle": "^2.6",
         "nelmio/cors-bundle": "^2.2",
         "phpdocumentor/reflection-docblock": "^5.3",
-        "stof/doctrine-extensions-bundle": "^1.7",
         "symfony/asset": "6.1.*",
         "symfony/console": "6.1.*",
         "symfony/dotenv": "6.1.*",
@@ -35,7 +32,7 @@
         "symfony/yaml": "6.1.*"
     },
     "require-dev": {
-        "api-platform/schema-generator": "^4.0",
+        "api-platform/schema-generator": "^5.0",
         "doctrine/doctrine-fixtures-bundle": "^3.4",
         "symfony/browser-kit": "6.1.*",
         "symfony/css-selector": "6.1.*",
@@ -72,6 +69,10 @@
         "paragonie/random_compat": "2.*",
         "symfony/polyfill-ctype": "*",
         "symfony/polyfill-iconv": "*",
+        "symfony/polyfill-intl-grapheme": "*",
+        "symfony/polyfill-intl-normalizer": "*",
+        "symfony/polyfill-mbstring": "*",
+        "symfony/polyfill-php81": "*",
         "symfony/polyfill-php80": "*",
         "symfony/polyfill-php74": "*",
         "symfony/polyfill-php73": "*",
@@ -96,7 +97,8 @@
     "extra": {
         "symfony": {
             "allow-contrib": false,
-            "require": "6.1.*"
+            "require": "6.1.*",
+            "docker": false
         }
     }
 }

@@ -2,46 +2,30 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\Joke;
-use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
+use App\Entity\User;
 
-class UserFixtures extends Fixture implements DependentFixtureInterface
-{
-    public function load(ObjectManager $manager): void
-    {
-        $pwd = '$2y$13$J5IdOLXFmW3MODsiWy38EufpneHTy2fpZt.zJrk/CPhDDq74JMIyK';
-
-        $user = (new User())
-            ->setEmail('user@user.fr')
-            ->setRoles(['ROLE_USER'])
-            ->setPassword($pwd)
-        ;
-        $manager->persist($user);
-
-        $admin = (new User())
-            ->setEmail('admin@user.fr')
-            ->setRoles(['ROLE_ADMIN'])
-            ->setPassword($pwd)
-        ;
+class UserFixtures extends Fixture {
+    public function load(ObjectManager $manager): void {
+        $admin = new User();
+        $admin->setFirstname('Admin');
+        $admin->setLastname('Test');
+        $admin->setBirthdate(new \DateTime('1990-01-01'));
+        $admin->setEmail('admin@example.com');
+        $admin->setPassword('$2y$13$Ab1A2/einqjW6NrtAlX8EeBAej4NLTTO1UizZO1ZSiwfYCuBErSva');
+        $admin->setRoles(['ROLE_ADMIN']);
         $manager->persist($admin);
 
-        $moderator = (new User())
-            ->setEmail('moderator@user.fr')
-            ->setRoles(['ROLE_MODERATOR'])
-            ->setPassword($pwd)
-        ;
-        $manager->persist($moderator);
+        $user = new User();
+        $user->setFirstname('User');
+        $user->setLastname('Test');
+        $user->setBirthdate(new \DateTime('1990-01-01'));
+        $user->setEmail('user@example.com');
+        $user->setPassword('$2y$13$tIws.jl8f3de/iQNUI1O4.24v2E7kPuVIZiY2TgcJkA5E7NNGJQqm');
+        $user->setRoles(['ROLE_USER']);
+        $manager->persist($user);
 
         $manager->flush();
-    }
-
-    public function getDependencies()
-    {
-        return [
-            CategoryFixtures::class
-        ];
     }
 }
