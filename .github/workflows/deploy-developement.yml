@@ -19,7 +19,7 @@ jobs:
       - name: 📦 Generate vendor autoload
         run: |
           cd api
-          composer install --optimize
+          composer install --optimize-autoloader
           cd ..
       - name: 📤 Upload to [dev] server
         uses: SamKirkland/FTP-Deploy-Action@4.3.3
