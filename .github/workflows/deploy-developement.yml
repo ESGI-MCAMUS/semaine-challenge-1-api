@@ -19,6 +19,7 @@ jobs:
       - name: 📦 Generate vendor autoload
         uses: php-actions/composer@v6
         with:
+          path: ./api
           dev: yes
           args: --optimize-autoloader
       - name: 📤 Upload to [dev] server
