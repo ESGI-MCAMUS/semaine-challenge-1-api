@@ -16,10 +16,10 @@ jobs:
         run: |
           sed -i -e '/DATABASE_URL/d' -e '$aDATABASE_URL='"postgresql://$DB_USER:$DB_PASSWORD@$DB_HOST:5432/$DB_NAME?serverVersion=13&charset=utf8" api/.env
           sed -i "s#APP_ENV=.*#APP_ENV=dev#g" api/.env
-      - name: 📦 Install dependencies
-        run: |
-          cd api
-          composer install --optimize-autoloader
+      - name: 📦 Generate vendor autoload
+        uses: php-actions/composer@v6
+        with:
+          command: composer install --optimize-autoloader
       - name: 📤 Upload to [dev] server
         uses: SamKirkland/FTP-Deploy-Action@4.3.3
         with:
