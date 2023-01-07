@@ -16,16 +16,17 @@ jobs:
         run: |
           sed -i -e '/DATABASE_URL/d' -e '$aDATABASE_URL='"postgresql://$DB_USER:$DB_PASSWORD@$DB_HOST:5432/$DB_NAME?serverVersion=13&charset=utf8" api/.env
           sed -i "s#APP_ENV=.*#APP_ENV=dev#g" api/.env
+          sed -i "s#TRUSTED_HOSTS=.*#TRUSTED_HOSTS=api.challenge-dev.mistergooddeal.org#g" api/.env
       - name: 📦 Generate vendor autoload
         run: |
           cd api
           composer install --optimize-autoloader
           cd ..
-      - name: 🗃️ Make database migrations
-        run: |
-          cd api
-          php bin/console doctrine:migrations:migrate --no-interaction
-          cd ..
+      # - name: 🗃️ Make database migrations
+      #   run: |
+      #     cd api
+      #     php bin/console doctrine:migrations:migrate --no-interaction
+      #     cd ..
       - name: 📤 Upload to [dev] server
         uses: SamKirkland/FTP-Deploy-Action@4.3.3
         with:

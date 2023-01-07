@@ -18,6 +18,7 @@ jobs:
         run: |
           sed -i -e '/DATABASE_URL/d' -e '$aDATABASE_URL='"postgresql://$DB_USER:$DB_PASSWORD@$DB_HOST:5432/$DB_NAME?serverVersion=13&charset=utf8" api/.env
           sed -i "s#APP_ENV=.*#APP_ENV=dev#g" api/.env
+          sed -i "s#TRUSTED_HOSTS=.*#TRUSTED_HOSTS=api.challenge.mistergooddeal.org#g" api/.env
       - name: 📤 Upload to [prod] server
         uses: SamKirkland/FTP-Deploy-Action@4.3.3
         with:
