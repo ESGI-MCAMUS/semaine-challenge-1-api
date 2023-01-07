@@ -19,7 +19,8 @@ jobs:
       - name: 📦 Generate vendor autoload
         uses: php-actions/composer@v6
         with:
-          command: composer install --optimize-autoloader
+          dev: yes
+          args: --optimize-autoloader
       - name: 📤 Upload to [dev] server
         uses: SamKirkland/FTP-Deploy-Action@4.3.3
         with:
