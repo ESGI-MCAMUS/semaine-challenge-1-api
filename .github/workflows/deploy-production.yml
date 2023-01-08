@@ -9,17 +9,29 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: 💾 Update database credentials
+      - name: 💾 Build production env
         env:
           DB_HOST: ${{ secrets.DB_HOST }}
           DB_NAME: ${{ secrets.DB_PROD }}
           DB_USER: ${{ secrets.DB_USER_PROD }}
           DB_PASSWORD: ${{ secrets.DB_PASSWORD_PROD }}
         run: |
-          sed -i -e '/DATABASE_URL/d' -e '$aDATABASE_URL='"postgresql://$DB_USER:$DB_PASSWORD@$DB_HOST:5432/$DB_NAME?serverVersion=13&charset=utf8" api/.env
-          sed -i "s#APP_ENV=.*#APP_ENV=dev#g" api/.env
-          sed -i "s#TRUSTED_HOSTS=.*#TRUSTED_HOSTS=api.challenge.mistergooddeal.org#g" api/.env
-          cat api/.env
+          # sed -i -e '/DATABASE_URL/d' -e '$aDATABASE_URL='"postgresql://$DB_USER:$DB_PASSWORD@$DB_HOST:5432/$DB_NAME?serverVersion=13&charset=utf8" api/.env
+          # sed -i "s#APP_ENV=.*#APP_ENV=dev#g" api/.env
+          # sed -i "s#TRUSTED_HOSTS=.*#TRUSTED_HOSTS=api.challenge.mistergooddeal.org#g" api/.env
+          # cat api/.env
+          cd api 
+          .env.prod >> DATABASE_URL="postgresql://$DB_USER:$DB_PASSWORD@$DB_HOST:5432/$DB_NAME?serverVersion=13&charset=utf8"
+          .env.prod >> APP_ENV=prod
+          .env.prod >> APP_SECRET=!ChangeMe!
+          .env.prod >> CORS_ALLOW_ORIGIN='^https?://(localhost|127\.0\.0\.1)(:[0-9]+)?$'
+          .env.prod >> MERCURE_URL=http://caddy/.well-known/mercure
+          .env.prod >> MERCURE_PUBLIC_URL=https://localhost/.well-known/mercure
+          .env.prod >> MERCURE_JWT_SECRET="!ChangeThisMercureHubJWTSecretKey!"
+          .env.prod >> JWT_SECRET_KEY=%kernel.project_dir%/config/jwt/private.pem
+          .env.prod >> JWT_PUBLIC_KEY=%kernel.project_dir%/config/jwt/public.pem
+          .env.prod >> JWT_PASSPHRASE=a724062c9ec0d4fab276660646d4160b
+          mv .env.prod .env
       - name: 📦 Generate vendor autoload
         run: |
           cd api
