@@ -16,10 +16,6 @@ jobs:
           DB_USER: ${{ secrets.DB_USER_PROD }}
           DB_PASSWORD: ${{ secrets.DB_PASSWORD_PROD }}
         run: |
-          # sed -i -e '/DATABASE_URL/d' -e '$aDATABASE_URL='"postgresql://$DB_USER:$DB_PASSWORD@$DB_HOST:5432/$DB_NAME?serverVersion=13&charset=utf8" api/.env
-          # sed -i "s#APP_ENV=.*#APP_ENV=dev#g" api/.env
-          # sed -i "s#TRUSTED_HOSTS=.*#TRUSTED_HOSTS=api.challenge.mistergooddeal.org#g" api/.env
-          # cat api/.env
           cd api 
           .env.prod >> DATABASE_URL="postgresql://$DB_USER:$DB_PASSWORD@$DB_HOST:5432/$DB_NAME?serverVersion=13&charset=utf8"
           .env.prod >> APP_ENV=prod
