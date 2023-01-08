@@ -32,6 +32,23 @@ jobs:
           echo "TRUSTED_HOSTS=api.challenge.mistergooddeal.org" >> .env.prod
           mv .env.prod .env
           cd ..
+      - name: ⚙️ Generating .htaccess for the server
+        env:
+          HTACCESS: ${{ secrets.HTACCESS }}
+        run: |
+          cd api/public
+          echo "$HTACCESS" >> .htaccess
+          cd ../..
+      - name: 🔑 Generate JWT keys
+        env:
+          JWT_PUBLIC_KEY: ${{ secrets.JWT_PUBLIC_KEY }}
+          JWT_PRIVATE_KEY: ${{ secrets.JWT_PRIVATE_KEY }}
+        run: |
+          cd api
+          mkdir -p config/jwt
+          echo "$JWT_PUBLIC_KEY" >> config/jwt/public.pem
+          echo "$JWT_PRIVATE_KEY" >> config/jwt/private.pem          
+          cd ..
       - name: 📦 Generate vendor autoload
         run: |
           cd api

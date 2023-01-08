@@ -29,7 +29,23 @@ jobs:
           echo "TRUSTED_PROXIES=0.0.0.0" >> .env.dev
           echo "TRUSTED_HOSTS=api.challenge-dev.mistergooddeal.org" >> .env.dev
           mv .env.dev .env
-          cat .env
+          cd ..
+      - name: ⚙️ Generating .htaccess for the server
+        env:
+          HTACCESS: ${{ secrets.HTACCESS }}
+        run: |
+          cd api/public
+          echo "$HTACCESS" >> .htaccess
+          cd ../..
+      - name: 🔑 Generate JWT keys
+        env:
+          JWT_PUBLIC_KEY: ${{ secrets.JWT_PUBLIC_KEY }}
+          JWT_PRIVATE_KEY: ${{ secrets.JWT_PRIVATE_KEY }}
+        run: |
+          cd api
+          mkdir -p config/jwt
+          echo "$JWT_PUBLIC_KEY" >> config/jwt/public.pem
+          echo "$JWT_PRIVATE_KEY" >> config/jwt/private.pem          
           cd ..
       - name: 📦 Generate vendor autoload
         run: |
