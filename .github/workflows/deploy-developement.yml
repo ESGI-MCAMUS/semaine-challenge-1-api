@@ -29,6 +29,7 @@ jobs:
           echo 'TRUSTED_PROXIES=0.0.0.0' >> .env.dev
           echo 'TRUSTED_HOSTS=api.challenge-dev.mistergooddeal.org' >> .env.dev
           mv .env.dev .env
+          cat .env
           cd ..
       - name: 📦 Generate vendor autoload
         run: |
