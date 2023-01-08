@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: 💾 Update database credentials
+      - name: 💾 Build development env
         env:
           DB_HOST: ${{ secrets.DB_HOST }}
           DB_NAME: ${{ secrets.DB_DEV }}
@@ -31,11 +31,11 @@ jobs:
           mv .env.dev .env
           cat .env
           cd ..
-      - name: 📦 Generate vendor autoload
-        run: |
-          cd api
-          composer install --optimize-autoloader
-          cd ..
+      # - name: 📦 Generate vendor autoload
+      #   run: |
+      #     cd api
+      #     composer install --optimize-autoloader
+      #     cd ..
       # - name: 🗃️ Make database migrations
       #   run: |
       #     cd api
