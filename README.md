@@ -1,5 +1,8 @@
 # Semaine Challenge API
 
+[![💻 Deploy to dev](https://github.com/ESGI-MCAMUS/semaine-challenge-1-api/actions/workflows/deploy-developement.yml/badge.svg)](https://github.com/ESGI-MCAMUS/semaine-challenge-1-api/actions/workflows/deploy-developement.yml)
+[![🖥️ Deploy to prod](https://github.com/ESGI-MCAMUS/semaine-challenge-1-api/actions/workflows/deploy-production.yml/badge.svg)](https://github.com/ESGI-MCAMUS/semaine-challenge-1-api/actions/workflows/deploy-production.yml)
+
 ## 🖥️ How to start the project?
 
 1. Clone the project
