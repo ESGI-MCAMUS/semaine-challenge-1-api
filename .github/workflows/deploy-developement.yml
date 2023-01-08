@@ -16,18 +16,18 @@ jobs:
           JWT_PASSPHRASE: ${{ secrets.JWT_PASSPHRASE }}
         run: |
           cd api 
-          echo "DATABASE_URL=postgresql://$DB_USER:$DB_PASSWORD@$DB_HOST:5432/$DB_NAME?serverVersion=13&charset=utf8" >> .env.dev
+          echo "DATABASE_URL='postgresql://$DB_USER:$DB_PASSWORD@$DB_HOST:5432/$DB_NAME?serverVersion=13&charset=utf8'" >> .env.dev
           echo "APP_ENV=prod" >> .env.dev
           echo "APP_SECRET=!ChangeMe!" >> .env.dev
-          echo "CORS_ALLOW_ORIGIN="^https?://(localhost|127\.0\.0\.1)(:[0-9]+)?$"" >> .env.dev
+          echo "CORS_ALLOW_ORIGIN='^https?://(localhost|127\.0\.0\.1)(:[0-9]+)?$'" >> .env.dev
           echo "MERCURE_URL=http://caddy/.well-known/mercure" >> .env.dev
           echo "MERCURE_PUBLIC_URL=https://localhost/.well-known/mercure" >> .env.dev
-          echo "MERCURE_JWT_SECRET="!ChangeThisMercureHubJWTSecretKey!"" >> .env.dev
+          echo "MERCURE_JWT_SECRET='!ChangeThisMercureHubJWTSecretKey!'" >> .env.dev
           echo "JWT_SECRET_KEY=%kernel.project_dir%/config/jwt/private.pem" >> .env.dev
           echo "JWT_PUBLIC_KEY=%kernel.project_dir%/config/jwt/public.pem" >> .env.dev
           echo "JWT_PASSPHRASE=$JWT_PASSPHRASE" >> .env.dev
           echo "TRUSTED_PROXIES=0.0.0.0" >> .env.dev
-          echo "TRUSTED_HOSTS=api.challenge-dev.mistergooddeal.org" >> .env.dev
+          echo "TRUSTED_HOSTS=api.challenge.mistergooddeal.org" >> .env.dev
           mv .env.dev .env
           cat .env
           cd ..
