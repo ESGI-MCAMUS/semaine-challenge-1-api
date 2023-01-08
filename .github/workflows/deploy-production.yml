@@ -18,18 +18,18 @@ jobs:
           JWT_PASSPHRASE: ${{ secrets.JWT_PASSPHRASE }}
         run: |
           cd api 
-          echo 'DATABASE_URL=postgresql://$DB_USER:$DB_PASSWORD@$DB_HOST:5432/$DB_NAME?serverVersion=13&charset=utf8' >> .env.prod
-          echo 'APP_ENV=prod' >> .env.prod
-          echo 'APP_SECRET=!ChangeMe!' >> .env.prod
-          echo 'CORS_ALLOW_ORIGIN="^https?://(localhost|127\.0\.0\.1)(:[0-9]+)?$"' >> .env.prod
-          echo 'MERCURE_URL=http://caddy/.well-known/mercure' >> .env.prod
-          echo 'MERCURE_PUBLIC_URL=https://localhost/.well-known/mercure' >> .env.prod
-          echo 'MERCURE_JWT_SECRET="!ChangeThisMercureHubJWTSecretKey!"' >> .env.prod
-          echo 'JWT_SECRET_KEY=%kernel.project_dir%/config/jwt/private.pem' >> .env.prod
-          echo 'JWT_PUBLIC_KEY=%kernel.project_dir%/config/jwt/public.pem' >> .env.prod
-          echo 'JWT_PASSPHRASE=$JWT_PASSPHRASE' >> .env.prod
-          echo 'TRUSTED_PROXIES=0.0.0.0' >> .env.prod
-          echo 'TRUSTED_HOSTS=api.challenge.mistergooddeal.org' >> .env.prod
+          echo "DATABASE_URL=postgresql://$DB_USER:$DB_PASSWORD@$DB_HOST:5432/$DB_NAME?serverVersion=13&charset=utf8" >> .env.prod
+          echo "APP_ENV=prod" >> .env.prod
+          echo "APP_SECRET=!ChangeMe!" >> .env.prod
+          echo "CORS_ALLOW_ORIGIN="^https?://(localhost|127\.0\.0\.1)(:[0-9]+)?$"" >> .env.prod
+          echo "MERCURE_URL=http://caddy/.well-known/mercure" >> .env.prod
+          echo "MERCURE_PUBLIC_URL=https://localhost/.well-known/mercure" >> .env.prod
+          echo "MERCURE_JWT_SECRET="!ChangeThisMercureHubJWTSecretKey!"" >> .env.prod
+          echo "JWT_SECRET_KEY=%kernel.project_dir%/config/jwt/private.pem" >> .env.prod
+          echo "JWT_PUBLIC_KEY=%kernel.project_dir%/config/jwt/public.pem" >> .env.prod
+          echo "JWT_PASSPHRASE=$JWT_PASSPHRASE" >> .env.prod
+          echo "TRUSTED_PROXIES=0.0.0.0" >> .env.prod
+          echo "TRUSTED_HOSTS=api.challenge.mistergooddeal.org" >> .env.prod
           mv .env.prod .env
           cd ..
       - name: 📦 Generate vendor autoload
