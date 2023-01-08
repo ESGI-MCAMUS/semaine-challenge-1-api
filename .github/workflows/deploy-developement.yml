@@ -16,7 +16,7 @@ jobs:
           JWT_PASSPHRASE: ${{ secrets.JWT_PASSPHRASE }}
         run: |
           cd api 
-          echo 'DATABASE_URL="postgresql://$DB_USER:$DB_PASSWORD@$DB_HOST:5432/$DB_NAME?serverVersion=13&charset=utf8"' >> .env.dev
+          echo 'DATABASE_URL=postgresql://$DB_USER:$DB_PASSWORD@$DB_HOST:5432/$DB_NAME?serverVersion=13&charset=utf8' >> .env.dev
           echo 'APP_ENV=prod' >> .env.dev
           echo 'APP_SECRET=!ChangeMe!' >> .env.dev
           echo 'CORS_ALLOW_ORIGIN="^https?://(localhost|127\.0\.0\.1)(:[0-9]+)?$"' >> .env.dev
