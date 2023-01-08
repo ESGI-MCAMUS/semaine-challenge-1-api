@@ -27,7 +27,7 @@ jobs:
           echo "JWT_PUBLIC_KEY=%kernel.project_dir%/config/jwt/public.pem" >> .env.dev
           echo "JWT_PASSPHRASE=$JWT_PASSPHRASE" >> .env.dev
           echo "TRUSTED_PROXIES=0.0.0.0" >> .env.dev
-          echo "TRUSTED_HOSTS=api.challenge.mistergooddeal.org" >> .env.dev
+          echo "TRUSTED_HOSTS=api.challenge-dev.mistergooddeal.org" >> .env.dev
           mv .env.dev .env
           cat .env
           cd ..
