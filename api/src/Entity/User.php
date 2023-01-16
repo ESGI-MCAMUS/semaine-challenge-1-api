@@ -12,6 +12,8 @@ use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\Put;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UserRepository;
@@ -77,6 +79,50 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface {
     #[Groups(['user:read', 'user:create', 'user:update'])]
     #[Assert\NotBlank(groups: ['user:create'])]
     private ?string $lastname = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $token = null;
+
+    #[ORM\Column(type: "datetime", options: ["default" => "CURRENT_TIMESTAMP"])]
+    private $createdAt;
+
+    #[ORM\Column(type: "datetime", options: ["default" => "CURRENT_TIMESTAMP"])]
+    private $updatedAt;
+
+    #[ORM\Column(nullable: true, type: "datetime")]
+    private $deletedAt;
+
+    #[ORM\OneToMany(mappedBy: 'publisher', targetEntity: RealEstateAd::class)]
+    private Collection $realEstateAds;
+
+    #[ORM\OneToMany(mappedBy: 'owner', targetEntity: Housing::class)]
+    private Collection $housings;
+
+    #[ORM\OneToMany(mappedBy: 'documents_owner', targetEntity: Documents::class)]
+    private Collection $documents;
+
+    #[ORM\OneToMany(mappedBy: 'debited_user', targetEntity: Payments::class)]
+    private Collection $payments;
+
+    #[ORM\OneToMany(mappedBy: 'contract_owner', targetEntity: UserContract::class)]
+    private Collection $userContracts;
+
+    #[ORM\OneToMany(mappedBy: 'visitor', targetEntity: Appointment::class)]
+    private Collection $appointments;
+
+    #[ORM\OneToMany(mappedBy: 'fk_user', targetEntity: FavoriteAd::class)]
+    private Collection $favoriteAds;
+
+    public function __construct()
+    {
+        $this->realEstateAds = new ArrayCollection();
+        $this->housings = new ArrayCollection();
+        $this->documents = new ArrayCollection();
+        $this->payments = new ArrayCollection();
+        $this->userContracts = new ArrayCollection();
+        $this->appointments = new ArrayCollection();
+        $this->favoriteAds = new ArrayCollection();
+    }
 
     public function getId(): ?int {
         return $this->id;
@@ -174,6 +220,256 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface {
 
     public function setLastname(string $lastname): self {
         $this->lastname = $lastname;
+
+        return $this;
+    }
+
+    public function getToken(): ?string {
+        return $this->token;
+    }
+
+    public function setToken(?string $token): self {
+        $this->token = $token;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeImmutable {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeImmutable $createdAt): self {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeImmutable {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(\DateTimeImmutable $updatedAt): self {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getDeletedAt(): ?\DateTimeImmutable {
+        return $this->deletedAt;
+    }
+
+    public function setDeletedAt(?\DateTimeImmutable $deletedAt): self {
+        $this->deletedAt = $deletedAt;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, RealEstateAd>
+     */
+    public function getRealEstateAds(): Collection
+    {
+        return $this->realEstateAds;
+    }
+
+    public function addRealEstateAd(RealEstateAd $realEstateAd): self
+    {
+        if (!$this->realEstateAds->contains($realEstateAd)) {
+            $this->realEstateAds->add($realEstateAd);
+            $realEstateAd->setPublisher($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRealEstateAd(RealEstateAd $realEstateAd): self
+    {
+        if ($this->realEstateAds->removeElement($realEstateAd)) {
+            // set the owning side to null (unless already changed)
+            if ($realEstateAd->getPublisher() === $this) {
+                $realEstateAd->setPublisher(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Housing>
+     */
+    public function getHousings(): Collection
+    {
+        return $this->housings;
+    }
+
+    public function addHousing(Housing $housing): self
+    {
+        if (!$this->housings->contains($housing)) {
+            $this->housings->add($housing);
+            $housing->setOwner($this);
+        }
+
+        return $this;
+    }
+
+    public function removeHousing(Housing $housing): self
+    {
+        if ($this->housings->removeElement($housing)) {
+            // set the owning side to null (unless already changed)
+            if ($housing->getOwner() === $this) {
+                $housing->setOwner(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Documents>
+     */
+    public function getDocuments(): Collection
+    {
+        return $this->documents;
+    }
+
+    public function addDocument(Documents $document): self
+    {
+        if (!$this->documents->contains($document)) {
+            $this->documents->add($document);
+            $document->setDocumentsOwner($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDocument(Documents $document): self
+    {
+        if ($this->documents->removeElement($document)) {
+            // set the owning side to null (unless already changed)
+            if ($document->getDocumentsOwner() === $this) {
+                $document->setDocumentsOwner(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Payments>
+     */
+    public function getPayments(): Collection
+    {
+        return $this->payments;
+    }
+
+    public function addPayment(Payments $payment): self
+    {
+        if (!$this->payments->contains($payment)) {
+            $this->payments->add($payment);
+            $payment->setDebitedUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removePayment(Payments $payment): self
+    {
+        if ($this->payments->removeElement($payment)) {
+            // set the owning side to null (unless already changed)
+            if ($payment->getDebitedUser() === $this) {
+                $payment->setDebitedUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, UserContract>
+     */
+    public function getUserContracts(): Collection
+    {
+        return $this->userContracts;
+    }
+
+    public function addUserContract(UserContract $userContract): self
+    {
+        if (!$this->userContracts->contains($userContract)) {
+            $this->userContracts->add($userContract);
+            $userContract->setContractOwner($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserContract(UserContract $userContract): self
+    {
+        if ($this->userContracts->removeElement($userContract)) {
+            // set the owning side to null (unless already changed)
+            if ($userContract->getContractOwner() === $this) {
+                $userContract->setContractOwner(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Appointment>
+     */
+    public function getAppointments(): Collection
+    {
+        return $this->appointments;
+    }
+
+    public function addAppointment(Appointment $appointment): self
+    {
+        if (!$this->appointments->contains($appointment)) {
+            $this->appointments->add($appointment);
+            $appointment->setVisitor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAppointment(Appointment $appointment): self
+    {
+        if ($this->appointments->removeElement($appointment)) {
+            // set the owning side to null (unless already changed)
+            if ($appointment->getVisitor() === $this) {
+                $appointment->setVisitor(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, FavoriteAd>
+     */
+    public function getFavoriteAds(): Collection
+    {
+        return $this->favoriteAds;
+    }
+
+    public function addFavoriteAd(FavoriteAd $favoriteAd): self
+    {
+        if (!$this->favoriteAds->contains($favoriteAd)) {
+            $this->favoriteAds->add($favoriteAd);
+            $favoriteAd->setFkUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFavoriteAd(FavoriteAd $favoriteAd): self
+    {
+        if ($this->favoriteAds->removeElement($favoriteAd)) {
+            // set the owning side to null (unless already changed)
+            if ($favoriteAd->getFkUser() === $this) {
+                $favoriteAd->setFkUser(null);
+            }
+        }
 
         return $this;
     }
