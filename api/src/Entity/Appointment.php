@@ -21,10 +21,6 @@ class Appointment {
 
     #[ORM\ManyToOne(inversedBy: 'appointments')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?User $owner = null;
-
-    #[ORM\ManyToOne(inversedBy: 'appointments')]
-    #[ORM\JoinColumn(nullable: false)]
     private ?Housing $housing = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
@@ -49,16 +45,6 @@ class Appointment {
 
     public function setVisitor(?User $visitor): self {
         $this->visitor = $visitor;
-
-        return $this;
-    }
-
-    public function getOwner(): ?User {
-        return $this->owner;
-    }
-
-    public function setOwner(?User $owner): self {
-        $this->owner = $owner;
 
         return $this;
     }
