@@ -114,6 +114,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface {
     #[ORM\OneToMany(mappedBy: 'fk_user', targetEntity: FavoriteAd::class)]
     private Collection $favoriteAds;
 
+    #[ORM\Column(type: "boolean", options: ["default" => false], nullable: true)]
+    private ?bool $is_active = false;
+
     public function __construct() {
         $this->realEstateAds = new ArrayCollection();
         $this->housings = new ArrayCollection();
@@ -449,6 +452,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface {
                 $favoriteAd->setFkUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function isIsActive(): ?bool {
+        return $this->is_active;
+    }
+
+    public function setIsActive(bool $is_active): self {
+        $this->is_active = $is_active;
 
         return $this;
     }
