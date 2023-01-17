@@ -1,5 +1,7 @@
-turboinstall:
-	build start
+turboinstall: build start
+
+build:
+	docker-compose build --pull --no-cache
 
 start:
 	docker-compose up --detach
@@ -31,5 +33,4 @@ migrate:
 bdd:
 	docker-compose exec php bin/console d:s:u --force
 
-build:
-	docker-compose build --pull --no-cache
+

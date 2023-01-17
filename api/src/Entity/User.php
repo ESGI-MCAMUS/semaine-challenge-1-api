@@ -81,7 +81,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface {
     private ?string $lastname = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $token = null;
+    private ?string $emailToken = null;
 
     #[ORM\Column(type: "datetime", nullable: true, options: ["default" => "CURRENT_TIMESTAMP"])]
     private ?\DateTimeImmutable $createdAt;
@@ -225,11 +225,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface {
     }
 
     public function getToken(): ?string {
-        return $this->token;
+        return $this->emailToken;
     }
 
-    public function setToken(?string $token): self {
-        $this->token = $token;
+    public function setToken(?string $emailToken): self {
+        $this->emailToken = $emailToken;
 
         return $this;
     }
