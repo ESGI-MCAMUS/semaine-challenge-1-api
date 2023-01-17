@@ -1,5 +1,5 @@
 turboinstall:
-	build && start
+	build start
 
 start:
 	docker-compose up --detach
@@ -22,8 +22,11 @@ cache:
 composer:
 	rm -rf vendor/* && docker-compose exec php composer install
 
-migration:
+createMigration:
 	docker-compose exec php bin/console make:migration
+
+migrate:
+	docker-compose exec php bin/console doctrine:migrations:migrate
 
 bdd:
 	docker-compose exec php bin/console d:s:u --force
