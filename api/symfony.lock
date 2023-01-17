@@ -491,9 +491,6 @@
     "symfony/string": {
         "version": "v6.0.2"
     },
-    "symfony/swiftmailer-bundle": {
-        "version": "v2.3.8"
-    },
     "symfony/translation-contracts": {
         "version": "v3.0.0"
     },
