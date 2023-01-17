@@ -6,4 +6,6 @@ config/jwt/private.pem
 
 config/jwt/public.pem
 
+.idea
+.vscode
 api/.env
