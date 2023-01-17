@@ -83,14 +83,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface {
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $token = null;
 
-    #[ORM\Column(type: "datetime", options: ["default" => "CURRENT_TIMESTAMP"])]
-    private $createdAt;
+    #[ORM\Column(type: "datetime", nullable: true, options: ["default" => "CURRENT_TIMESTAMP"])]
+    private ?\DateTimeImmutable $createdAt;
 
-    #[ORM\Column(type: "datetime", options: ["default" => "CURRENT_TIMESTAMP"])]
-    private $updatedAt;
+    #[ORM\Column(type: "datetime",nullable: true, options: ["default" => "CURRENT_TIMESTAMP"])]
+    private ?\DateTimeImmutable $updatedAt;
 
-    #[ORM\Column(nullable: true, type: "datetime")]
-    private $deletedAt;
+    #[ORM\Column(type: "datetime", nullable: true)]
+    private ?\DateTimeImmutable $deletedAt;
 
     #[ORM\OneToMany(mappedBy: 'publisher', targetEntity: RealEstateAd::class)]
     private Collection $realEstateAds;

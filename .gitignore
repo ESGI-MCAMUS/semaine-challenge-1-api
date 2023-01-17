@@ -1,3 +1,7 @@
 /.env
 /helm/api-platform/charts/*
 !/helm/api-platform/charts/.gitignore
+
+config/jwt/private.pem
+
+config/jwt/public.pem
