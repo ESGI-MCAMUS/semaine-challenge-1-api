@@ -58,6 +58,13 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->save($user, true);
     }
 
+    /**
+     * Generate a token for email verification or password reset
+     */
+    public function generateToken(): string {
+        return rtrim(strtr(base64_encode(random_bytes(32)), '+/', '-_'), '=');
+    }
+
     private function findByRole(string $role, $active)
     {
         $resultSet = new ResultSetMapping;
