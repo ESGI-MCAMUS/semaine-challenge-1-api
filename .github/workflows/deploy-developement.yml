@@ -17,7 +17,7 @@ jobs:
           DB_USER: ${{ secrets.DB_USER_DEV }}
           DB_PASSWORD: ${{ secrets.DB_PASSWORD_DEV }}
           JWT_PASSPHRASE: ${{ secrets.JWT_PASSPHRASE }}
-          MAILER_URL: ${{ secrets.MAILER_URL }}
+          MAILER_API: ${{ secrets.MAILER_API }}
         run: |
           cd api 
           echo "DATABASE_URL='postgresql://$DB_USER:$DB_PASSWORD@$DB_HOST:5432/$DB_NAME?serverVersion=13&charset=utf8'" >> .env.dev
@@ -32,7 +32,7 @@ jobs:
           echo "JWT_PASSPHRASE=$JWT_PASSPHRASE" >> .env.dev
           echo "TRUSTED_PROXIES=0.0.0.0" >> .env.dev
           echo "TRUSTED_HOSTS=api.challenge-dev.mistergooddeal.org" >> .env.dev
-          echo "MAILER_URL=$MAILER_URL" >> .env.dev
+          echo "MAILER_API=$MAILER_API" >> .env.dev
           mv .env.dev .env
           cd ..
       - name: ⚙️ Generating .htaccess for the server
