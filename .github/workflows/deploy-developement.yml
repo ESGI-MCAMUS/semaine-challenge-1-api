@@ -33,6 +33,7 @@ jobs:
           echo "TRUSTED_PROXIES=0.0.0.0" >> .env.dev
           echo "TRUSTED_HOSTS=api.challenge-dev.mistergooddeal.org" >> .env.dev
           echo "MAILER_API=$MAILER_API" >> .env.dev
+          echo "FRONT_URL=https://challenge-dev.mistergooddeal.org" >> .env.dev
           mv .env.dev .env
           cd ..
       - name: ⚙️ Generating .htaccess for the server
