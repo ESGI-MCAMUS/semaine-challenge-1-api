@@ -23,11 +23,16 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
+use App\Controller\VerifyEmail;
 
 #[ApiResource(
     operations: [
         new GetCollection(),
         new Post(processor: UserPasswordHasher::class),
+        new Post(
+            name: 'verifyEmail',
+            routeName: 'verify_email',
+        ),
         new Get(security: 'is_granted("ROLE_ADMIN")'),
         new Put(processor: UserPasswordHasher::class),
         new Patch(processor: UserPasswordHasher::class),
@@ -82,36 +87,47 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface {
     private ?string $emailToken = null;
 
     #[ORM\Column(type: "datetime", nullable: true, options: ["default" => "CURRENT_TIMESTAMP"])]
+    #[Groups(['user:read'])]
     private $createdAt;
 
     #[ORM\Column(type: "datetime", nullable: true, options: ["default" => "CURRENT_TIMESTAMP"])]
+    #[Groups(['user:read'])]
     private $updatedAt;
 
     #[ORM\Column(type: "datetime", nullable: true)]
+    #[Groups(['user:read'])]
     private $deletedAt;
 
     #[ORM\OneToMany(mappedBy: 'publisher', targetEntity: RealEstateAd::class)]
+    #[Groups(['user:read'])]
     private Collection $realEstateAds;
 
     #[ORM\OneToMany(mappedBy: 'owner', targetEntity: Housing::class)]
+    #[Groups(['user:read'])]
     private Collection $housings;
 
     #[ORM\OneToMany(mappedBy: 'documents_owner', targetEntity: Documents::class)]
+    #[Groups(['user:read'])]
     private Collection $documents;
 
     #[ORM\OneToMany(mappedBy: 'debited_user', targetEntity: Payments::class)]
+    #[Groups(['user:read'])]
     private Collection $payments;
 
     #[ORM\OneToMany(mappedBy: 'contract_owner', targetEntity: UserContract::class)]
+    #[Groups(['user:read'])]
     private Collection $userContracts;
 
     #[ORM\OneToMany(mappedBy: 'visitor', targetEntity: Appointment::class)]
+    #[Groups(['user:read'])]
     private Collection $appointments;
 
     #[ORM\OneToMany(mappedBy: 'fk_user', targetEntity: FavoriteAd::class)]
+    #[Groups(['user:read'])]
     private Collection $favoriteAds;
 
     #[ORM\Column(type: "boolean", options: ["default" => false], nullable: true)]
+    #[Groups(['user:read'])]
     private ?bool $is_active = false;
 
     public function __construct() {
