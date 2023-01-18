@@ -31,6 +31,12 @@ services:
     App\Controller\VerifyEmail\:
         resource: "../src/Controller/VerifyEmail.php"
         tags: ["controller.service_arguments"]
+    App\Controller\AskResetPassword\:
+        resource: "../src/Controller/AskResetPassword.php"
+        tags: ["controller.service_arguments"]
+    App\Controller\ResetPassword\:
+        resource: "../src/Controller/ResetPassword.php"
+        tags: ["controller.service_arguments"]
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

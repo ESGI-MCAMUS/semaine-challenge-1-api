@@ -33,6 +33,14 @@ use App\Controller\VerifyEmail;
             name: 'verifyEmail',
             routeName: 'verify_email',
         ),
+        new Post(
+            name: 'askResetPassword',
+            routeName: 'ask_reset_password',
+        ),
+        new Post(
+            name: 'resetPassword',
+            routeName: 'reset_password',
+        ),
         new Get(security: 'is_granted("ROLE_ADMIN")'),
         new Put(processor: UserPasswordHasher::class),
         new Patch(processor: UserPasswordHasher::class),
