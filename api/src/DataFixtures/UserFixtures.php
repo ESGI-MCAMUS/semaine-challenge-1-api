@@ -17,6 +17,15 @@ class UserFixtures extends Fixture {
         $admin->setRoles(['ROLE_ADMIN']);
         $manager->persist($admin);
 
+        $owner = new User();
+        $owner->setFirstname('Owner');
+        $owner->setLastname('Test');
+        $owner->setBirthdate(new \DateTime('1990-01-01'));
+        $owner->setEmail('owner@example.com');
+        $owner->setPassword('$2y$13$7e9DOBlB2IKqX8AZchI.Ze6UveF5XcBUwwTpBaJWo5lfc10BqdRpW');
+        $owner->setRoles(['ROLE_OWNER']);
+        $manager->persist($owner);
+
         $user = new User();
         $user->setFirstname('User');
         $user->setLastname('Test');

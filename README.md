@@ -43,6 +43,7 @@ Then you can use the following credentials:
 | Email             | Password | Role       |
 | ----------------- | -------- | ---------- |
 | admin@example.com | admin    | ROLE_ADMIN |
+| owner@example.com | owner    | ROLE_OWNER |
 | user@example.com  | user     | ROLE_USER  |
 
 ## App deployement
@@ -52,16 +53,17 @@ Then you can use the following credentials:
 
 We're using GitHub Actions in order to deploy the app on the development and production server.
 
-### How it works? 
+### How it works?
 
 Both CIs (dev and prod) are using those steps in order to deploy the app:
+
 1. 💾 Build env: It'll create a `.env` file with the proper values for the targeted environment
-2. ⚙️ Generating .htaccess for the server: It'll create and store the `.htaccess` stored in the GitHub Actions secrets 
+2. ⚙️ Generating .htaccess for the server: It'll create and store the `.htaccess` stored in the GitHub Actions secrets
 3. 🔑 Generate JWT keys: It'll create the `public.pem` and `private.pem`
 4. 📦 Generate vendor autoload: It'll generate the vendors in order to make it work outside of the Docker
 5. 📤 Upload to server: It'll connect to the FTP server and upload the project
 
 ### How to trigger those GitHub Actions?
 
-- `deploy-to-dev`: It'll trigger automatically when some code is pushed to master branch
-- `deploy-to-prod`: It'll trigger whenever you create a new release on GitHub
+-   `deploy-to-dev`: It'll trigger automatically when some code is pushed to master branch
+-   `deploy-to-prod`: It'll trigger whenever you create a new release on GitHub
