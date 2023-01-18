@@ -30,8 +30,8 @@ use App\Controller\VerifyEmail;
         new GetCollection(),
         new Post(processor: UserPasswordHasher::class),
         new Post(
-            name: 'verifyEmail',
             routeName: 'verify_email',
+            name: 'verifyEmail',
         ),
         new Get(security: 'is_granted("ROLE_ADMIN")'),
         new Put(processor: UserPasswordHasher::class),
