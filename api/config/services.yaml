@@ -25,6 +25,12 @@ services:
     App\OpenApi\JwtDecorator:
         decorates: "api_platform.openapi.factory"
         arguments: ["@.inner"]
+    App\EventListener\UserSubscriber:
+        tags:
+            - { name: doctrine.event_subscriber }
+    App\Controller\VerifyEmail\:
+        resource: "../src/Controller/VerifyEmail.php"
+        tags: ["controller.service_arguments"]
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

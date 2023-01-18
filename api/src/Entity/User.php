@@ -23,13 +23,16 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
-
-use App\Controller\RegisterController;
+use App\Controller\VerifyEmail;
 
 #[ApiResource(
     operations: [
         new GetCollection(),
         new Post(processor: UserPasswordHasher::class),
+        new Post(
+            name: 'verifyEmail',
+            routeName: 'verify_email',
+        ),
         new Get(security: 'is_granted("ROLE_ADMIN")'),
         new Put(processor: UserPasswordHasher::class),
         new Patch(processor: UserPasswordHasher::class),
@@ -84,37 +87,50 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface {
     private ?string $emailToken = null;
 
     #[ORM\Column(type: "datetime", nullable: true, options: ["default" => "CURRENT_TIMESTAMP"])]
-    private ?\DateTimeImmutable $createdAt;
+    #[Groups(['user:read'])]
+    private $createdAt;
 
-    #[ORM\Column(type: "datetime",nullable: true, options: ["default" => "CURRENT_TIMESTAMP"])]
-    private ?\DateTimeImmutable $updatedAt;
+    #[ORM\Column(type: "datetime", nullable: true, options: ["default" => "CURRENT_TIMESTAMP"])]
+    #[Groups(['user:read'])]
+    private $updatedAt;
 
     #[ORM\Column(type: "datetime", nullable: true)]
-    private ?\DateTimeImmutable $deletedAt;
+    #[Groups(['user:read'])]
+    private $deletedAt;
 
     #[ORM\OneToMany(mappedBy: 'publisher', targetEntity: RealEstateAd::class)]
+    #[Groups(['user:read'])]
     private Collection $realEstateAds;
 
     #[ORM\OneToMany(mappedBy: 'owner', targetEntity: Housing::class)]
+    #[Groups(['user:read'])]
     private Collection $housings;
 
     #[ORM\OneToMany(mappedBy: 'documents_owner', targetEntity: Documents::class)]
+    #[Groups(['user:read'])]
     private Collection $documents;
 
     #[ORM\OneToMany(mappedBy: 'debited_user', targetEntity: Payments::class)]
+    #[Groups(['user:read'])]
     private Collection $payments;
 
     #[ORM\OneToMany(mappedBy: 'contract_owner', targetEntity: UserContract::class)]
+    #[Groups(['user:read'])]
     private Collection $userContracts;
 
     #[ORM\OneToMany(mappedBy: 'visitor', targetEntity: Appointment::class)]
+    #[Groups(['user:read'])]
     private Collection $appointments;
 
     #[ORM\OneToMany(mappedBy: 'fk_user', targetEntity: FavoriteAd::class)]
+    #[Groups(['user:read'])]
     private Collection $favoriteAds;
 
-    public function __construct()
-    {
+    #[ORM\Column(type: "boolean", options: ["default" => false], nullable: true)]
+    #[Groups(['user:read'])]
+    private ?bool $is_active = false;
+
+    public function __construct() {
         $this->realEstateAds = new ArrayCollection();
         $this->housings = new ArrayCollection();
         $this->documents = new ArrayCollection();
@@ -267,13 +283,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface {
     /**
      * @return Collection<int, RealEstateAd>
      */
-    public function getRealEstateAds(): Collection
-    {
+    public function getRealEstateAds(): Collection {
         return $this->realEstateAds;
     }
 
-    public function addRealEstateAd(RealEstateAd $realEstateAd): self
-    {
+    public function addRealEstateAd(RealEstateAd $realEstateAd): self {
         if (!$this->realEstateAds->contains($realEstateAd)) {
             $this->realEstateAds->add($realEstateAd);
             $realEstateAd->setPublisher($this);
@@ -282,8 +296,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface {
         return $this;
     }
 
-    public function removeRealEstateAd(RealEstateAd $realEstateAd): self
-    {
+    public function removeRealEstateAd(RealEstateAd $realEstateAd): self {
         if ($this->realEstateAds->removeElement($realEstateAd)) {
             // set the owning side to null (unless already changed)
             if ($realEstateAd->getPublisher() === $this) {
@@ -297,13 +310,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface {
     /**
      * @return Collection<int, Housing>
      */
-    public function getHousings(): Collection
-    {
+    public function getHousings(): Collection {
         return $this->housings;
     }
 
-    public function addHousing(Housing $housing): self
-    {
+    public function addHousing(Housing $housing): self {
         if (!$this->housings->contains($housing)) {
             $this->housings->add($housing);
             $housing->setOwner($this);
@@ -312,8 +323,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface {
         return $this;
     }
 
-    public function removeHousing(Housing $housing): self
-    {
+    public function removeHousing(Housing $housing): self {
         if ($this->housings->removeElement($housing)) {
             // set the owning side to null (unless already changed)
             if ($housing->getOwner() === $this) {
@@ -327,13 +337,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface {
     /**
      * @return Collection<int, Documents>
      */
-    public function getDocuments(): Collection
-    {
+    public function getDocuments(): Collection {
         return $this->documents;
     }
 
-    public function addDocument(Documents $document): self
-    {
+    public function addDocument(Documents $document): self {
         if (!$this->documents->contains($document)) {
             $this->documents->add($document);
             $document->setDocumentsOwner($this);
@@ -342,8 +350,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface {
         return $this;
     }
 
-    public function removeDocument(Documents $document): self
-    {
+    public function removeDocument(Documents $document): self {
         if ($this->documents->removeElement($document)) {
             // set the owning side to null (unless already changed)
             if ($document->getDocumentsOwner() === $this) {
@@ -357,13 +364,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface {
     /**
      * @return Collection<int, Payments>
      */
-    public function getPayments(): Collection
-    {
+    public function getPayments(): Collection {
         return $this->payments;
     }
 
-    public function addPayment(Payments $payment): self
-    {
+    public function addPayment(Payments $payment): self {
         if (!$this->payments->contains($payment)) {
             $this->payments->add($payment);
             $payment->setDebitedUser($this);
@@ -372,8 +377,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface {
         return $this;
     }
 
-    public function removePayment(Payments $payment): self
-    {
+    public function removePayment(Payments $payment): self {
         if ($this->payments->removeElement($payment)) {
             // set the owning side to null (unless already changed)
             if ($payment->getDebitedUser() === $this) {
@@ -387,13 +391,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface {
     /**
      * @return Collection<int, UserContract>
      */
-    public function getUserContracts(): Collection
-    {
+    public function getUserContracts(): Collection {
         return $this->userContracts;
     }
 
-    public function addUserContract(UserContract $userContract): self
-    {
+    public function addUserContract(UserContract $userContract): self {
         if (!$this->userContracts->contains($userContract)) {
             $this->userContracts->add($userContract);
             $userContract->setContractOwner($this);
@@ -402,8 +404,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface {
         return $this;
     }
 
-    public function removeUserContract(UserContract $userContract): self
-    {
+    public function removeUserContract(UserContract $userContract): self {
         if ($this->userContracts->removeElement($userContract)) {
             // set the owning side to null (unless already changed)
             if ($userContract->getContractOwner() === $this) {
@@ -417,13 +418,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface {
     /**
      * @return Collection<int, Appointment>
      */
-    public function getAppointments(): Collection
-    {
+    public function getAppointments(): Collection {
         return $this->appointments;
     }
 
-    public function addAppointment(Appointment $appointment): self
-    {
+    public function addAppointment(Appointment $appointment): self {
         if (!$this->appointments->contains($appointment)) {
             $this->appointments->add($appointment);
             $appointment->setVisitor($this);
@@ -432,8 +431,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface {
         return $this;
     }
 
-    public function removeAppointment(Appointment $appointment): self
-    {
+    public function removeAppointment(Appointment $appointment): self {
         if ($this->appointments->removeElement($appointment)) {
             // set the owning side to null (unless already changed)
             if ($appointment->getVisitor() === $this) {
@@ -447,13 +445,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface {
     /**
      * @return Collection<int, FavoriteAd>
      */
-    public function getFavoriteAds(): Collection
-    {
+    public function getFavoriteAds(): Collection {
         return $this->favoriteAds;
     }
 
-    public function addFavoriteAd(FavoriteAd $favoriteAd): self
-    {
+    public function addFavoriteAd(FavoriteAd $favoriteAd): self {
         if (!$this->favoriteAds->contains($favoriteAd)) {
             $this->favoriteAds->add($favoriteAd);
             $favoriteAd->setFkUser($this);
@@ -462,14 +458,23 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface {
         return $this;
     }
 
-    public function removeFavoriteAd(FavoriteAd $favoriteAd): self
-    {
+    public function removeFavoriteAd(FavoriteAd $favoriteAd): self {
         if ($this->favoriteAds->removeElement($favoriteAd)) {
             // set the owning side to null (unless already changed)
             if ($favoriteAd->getFkUser() === $this) {
                 $favoriteAd->setFkUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function isIsActive(): ?bool {
+        return $this->is_active;
+    }
+
+    public function setIsActive(bool $is_active): self {
+        $this->is_active = $is_active;
 
         return $this;
     }
