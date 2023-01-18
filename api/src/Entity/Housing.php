@@ -40,10 +40,10 @@ class Housing {
     #[ORM\Column]
     private ?int $floor = null;
 
-    #[ORM\Column(type: "datetime", options: ["default" => "CURRENT_TIMESTAMP"])]
+    #[ORM\Column(nullable: true, type: "datetime", options: ["default" => "CURRENT_TIMESTAMP"])]
     private ?\DateTimeImmutable $createdAt;
 
-    #[ORM\Column(type: "datetime", options: ["default" => "CURRENT_TIMESTAMP"])]
+    #[ORM\Column(nullable: true, type: "datetime", options: ["default" => "CURRENT_TIMESTAMP"])]
     private ?\DateTimeImmutable $updatedAt;
 
     #[ORM\Column(nullable: true, type: "datetime")]
@@ -69,8 +69,7 @@ class Housing {
     #[ORM\OneToMany(mappedBy: 'housing', targetEntity: Appointment::class)]
     private Collection $appointments;
 
-    public function __construct()
-    {
+    public function __construct() {
         $this->payments = new ArrayCollection();
         $this->userContracts = new ArrayCollection();
         $this->appointments = new ArrayCollection();
@@ -190,37 +189,31 @@ class Housing {
         return $this;
     }
 
-    public function getProperties(): ?HousingProperties
-    {
+    public function getProperties(): ?HousingProperties {
         return $this->properties;
     }
 
-    public function setProperties(HousingProperties $properties): self
-    {
+    public function setProperties(HousingProperties $properties): self {
         $this->properties = $properties;
 
         return $this;
     }
 
-    public function getOwner(): ?User
-    {
+    public function getOwner(): ?User {
         return $this->owner;
     }
 
-    public function setOwner(?User $owner): self
-    {
+    public function setOwner(?User $owner): self {
         $this->owner = $owner;
 
         return $this;
     }
 
-    public function getDocuments(): ?Documents
-    {
+    public function getDocuments(): ?Documents {
         return $this->documents;
     }
 
-    public function setDocuments(Documents $documents): self
-    {
+    public function setDocuments(Documents $documents): self {
         // set the owning side of the relation if necessary
         if ($documents->getHousing() !== $this) {
             $documents->setHousing($this);
@@ -234,13 +227,11 @@ class Housing {
     /**
      * @return Collection<int, Payments>
      */
-    public function getPayments(): Collection
-    {
+    public function getPayments(): Collection {
         return $this->payments;
     }
 
-    public function addPayment(Payments $payment): self
-    {
+    public function addPayment(Payments $payment): self {
         if (!$this->payments->contains($payment)) {
             $this->payments->add($payment);
             $payment->setHousing($this);
@@ -249,8 +240,7 @@ class Housing {
         return $this;
     }
 
-    public function removePayment(Payments $payment): self
-    {
+    public function removePayment(Payments $payment): self {
         if ($this->payments->removeElement($payment)) {
             // set the owning side to null (unless already changed)
             if ($payment->getHousing() === $this) {
@@ -264,13 +254,11 @@ class Housing {
     /**
      * @return Collection<int, UserContract>
      */
-    public function getUserContracts(): Collection
-    {
+    public function getUserContracts(): Collection {
         return $this->userContracts;
     }
 
-    public function addUserContract(UserContract $userContract): self
-    {
+    public function addUserContract(UserContract $userContract): self {
         if (!$this->userContracts->contains($userContract)) {
             $this->userContracts->add($userContract);
             $userContract->setHousing($this);
@@ -279,8 +267,7 @@ class Housing {
         return $this;
     }
 
-    public function removeUserContract(UserContract $userContract): self
-    {
+    public function removeUserContract(UserContract $userContract): self {
         if ($this->userContracts->removeElement($userContract)) {
             // set the owning side to null (unless already changed)
             if ($userContract->getHousing() === $this) {
@@ -294,13 +281,11 @@ class Housing {
     /**
      * @return Collection<int, Appointment>
      */
-    public function getAppointments(): Collection
-    {
+    public function getAppointments(): Collection {
         return $this->appointments;
     }
 
-    public function addAppointment(Appointment $appointment): self
-    {
+    public function addAppointment(Appointment $appointment): self {
         if (!$this->appointments->contains($appointment)) {
             $this->appointments->add($appointment);
             $appointment->setHousing($this);
@@ -309,8 +294,7 @@ class Housing {
         return $this;
     }
 
-    public function removeAppointment(Appointment $appointment): self
-    {
+    public function removeAppointment(Appointment $appointment): self {
         if ($this->appointments->removeElement($appointment)) {
             // set the owning side to null (unless already changed)
             if ($appointment->getHousing() === $this) {
