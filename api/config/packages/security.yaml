@@ -33,6 +33,7 @@ security:
         - { path: ^/docs, roles: PUBLIC_ACCESS } # Allows accessing the Swagger UI docs
         - { path: ^/auth, roles: PUBLIC_ACCESS } # Allow user login
         - { path: ^/users, roles: PUBLIC_ACCESS, methods: [POST] } # Allow user registration
+        - { path: ^/users/reset-password, roles: PUBLIC_ACCESS } # Allow user reset password
         - { path: ^/, roles: IS_AUTHENTICATED_FULLY }
 
 when@test:
