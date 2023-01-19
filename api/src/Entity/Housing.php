@@ -7,6 +7,8 @@ use App\Repository\HousingRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+
 
 #[ORM\Entity(repositoryClass: HousingRepository::class)]
 #[ApiResource]
@@ -49,8 +51,8 @@ class Housing {
     #[ORM\Column(nullable: true, type: "datetime")]
     private ?\DateTimeImmutable $deletedAt;
 
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\OneToOne(cascade: ['persist', 'remove'], targetEntity: HousingProperties::class)]
+    #[ORM\JoinColumn(nullable: false, referencedColumnName: 'id', name: 'properties_id')]
     private ?HousingProperties $properties = null;
 
     #[ORM\ManyToOne(inversedBy: 'housings')]
