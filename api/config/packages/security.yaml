@@ -37,6 +37,11 @@ security:
         - { path: ^/real_estate_ads, roles: PUBLIC_ACCESS, methods: [GET] } # Allow public access to real estate ads list
         - { path: ^/users, roles: PUBLIC_ACCESS, methods: [POST] } # Allow user registration
         - { path: ^/users/reset-password, roles: PUBLIC_ACCESS } # Allow user reset password
+        - {
+              path: ^/favorite_ads,
+              roles: IS_AUTHENTICATED_FULLY,
+              methods: [POST, GET, DELETE],
+          } # Allow user to add favorite ad
         - { path: ^/, roles: IS_AUTHENTICATED_FULLY }
 
 when@test:
