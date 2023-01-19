@@ -5,9 +5,14 @@ namespace App\Entity;
 use ApiPlatform\Metadata\ApiResource;
 use App\Repository\FavoriteAdRepository;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Metadata\ApiFilter;
+
+
 
 #[ORM\Entity(repositoryClass: FavoriteAdRepository::class)]
 #[ApiResource]
+#[ApiFilter(SearchFilter::class, properties: ['fk_user' => 'exact'])]
 class FavoriteAd {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -22,14 +27,14 @@ class FavoriteAd {
     #[ORM\JoinColumn(nullable: false)]
     private ?RealEstateAd $realEstateAd = null;
 
-    #[ORM\Column(type: "datetime", options: ["default" => "CURRENT_TIMESTAMP"])]
-    private ?\DateTimeImmutable $createdAt;
+    #[ORM\Column(nullable: true, type: "datetime", options: ["default" => "CURRENT_TIMESTAMP"])]
+    private $createdAt;
 
-    #[ORM\Column(type: "datetime", options: ["default" => "CURRENT_TIMESTAMP"])]
-    private ?\DateTimeImmutable $updatedAt;
+    #[ORM\Column(nullable: true, type: "datetime", options: ["default" => "CURRENT_TIMESTAMP"])]
+    private $updatedAt;
 
     #[ORM\Column(nullable: true, type: "datetime")]
-    private ?\DateTimeImmutable $deletedAt;
+    private $deletedAt;
 
     public function getId(): ?int {
         return $this->id;
