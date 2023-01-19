@@ -86,8 +86,13 @@ class UserFixtures extends Fixture {
             $realEstateAd->setType($faker->randomElement(['rent', 'sale']));
             $realEstateAd->setPrice($faker->numberBetween(100, 1000000));
             $realEstateAd->setTitle($faker->sentence(6, true));
-            $realEstateAd->setDescription($faker->paragraph(5, true));
-            $realEstateAd->setPhotos([$faker->imageUrl(640, 480, 'cats', true, true), $faker->imageUrl(640, 480, 'cats', true, true), $faker->imageUrl(640, 480, 'cats', true, true)]);
+            $realEstateAd->setDescription($faker->paragraph(30, true));
+            $randomNumber = $faker->numberBetween(5, 20);
+            $photos = [];
+            for ($j = 0; $j < $randomNumber; $j++) {
+                $photos[] = $faker->imageUrl(640, 480, 'housing', true, false);
+            }
+            $realEstateAd->setPhotos($photos);
             $realEstateAd->setHousing($housing);
             $realEstateAd->setPublisher($user);
             $realEstateAd->setIsVisible(true);
