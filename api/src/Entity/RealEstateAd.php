@@ -8,7 +8,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: RealEstateAdRepository::class)]
-#[ApiResource]
+#[ApiResource(paginationItemsPerPage: 10)]
 class RealEstateAd {
     #[ORM\Id]
     #[ORM\GeneratedValue]
