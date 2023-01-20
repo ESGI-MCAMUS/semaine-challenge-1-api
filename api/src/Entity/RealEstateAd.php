@@ -6,9 +6,14 @@ use ApiPlatform\Metadata\ApiResource;
 use App\Repository\RealEstateAdRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Metadata\ApiFilter;
 
 #[ORM\Entity(repositoryClass: RealEstateAdRepository::class)]
-#[ApiResource(paginationItemsPerPage: 10)]
+#[ApiResource(paginationItemsPerPage: 10, paginationClientEnabled: true)]
+#[ApiFilter(SearchFilter::class, properties: [
+    'title' => 'partial',
+])]
 class RealEstateAd {
     #[ORM\Id]
     #[ORM\GeneratedValue]
