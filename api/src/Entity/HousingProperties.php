@@ -5,9 +5,23 @@ namespace App\Entity;
 use ApiPlatform\Metadata\ApiResource;
 use App\Repository\HousingPropertiesRepository;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Metadata\ApiFilter;
 
 #[ORM\Entity(repositoryClass: HousingPropertiesRepository::class)]
-#[ApiResource]
+#[ApiResource(paginationClientEnabled: true)]
+#[ApiFilter(SearchFilter::class, properties: [
+    'type' => 'exact',
+    'rooms' => 'exact',
+    'hasGarden' => 'exact',
+    'hasParking' => 'exact',
+    'hasPool' => 'exact',
+    'hasCave' => 'exact',
+    'hasAttic' => 'exact',
+    'hasBalcony' => 'exact',
+    'nearPublicTransport' => 'exact',
+    'classification' => 'exact'
+])]
 class HousingProperties {
     #[ORM\Id]
     #[ORM\GeneratedValue]
