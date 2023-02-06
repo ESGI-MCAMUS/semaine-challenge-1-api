@@ -73,7 +73,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface {
     private ?string $plainPassword = null;
 
     #[ORM\Column(type: 'json')]
-    private array $roles = ["ROLE_USER"];
+    private array $roles = ['ROLE_USER'];
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     #[Groups(['user:read', 'user:create', 'user:update'])]
@@ -196,7 +196,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface {
         return array_unique($roles);
     }
 
-    public function setRoles(array $roles): self {
+    public function setRoles(array $roles): self
+    {
         $this->roles = $roles;
 
         return $this;

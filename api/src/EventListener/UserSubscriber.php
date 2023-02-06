@@ -35,7 +35,7 @@ class UserSubscriber implements EventSubscriberInterface {
     if ($object instanceof User) {
       $this->updatePwd($object);
       $object->setToken($this->userRepository->generateToken());
-      $object->setRoles(['ROLE_USER']);
+      /*$object->setRoles(['ROLE_USER']);*/
       $this->sendinblueMailer->sendEmail($object, ['firstname' => $object->getFirstname(), 'confirmationURL' => $_ENV['FRONT_URL'] . '/confirm/' . $object->getToken()]);
     }
   }
