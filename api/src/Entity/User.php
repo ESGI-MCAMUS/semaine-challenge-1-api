@@ -41,7 +41,7 @@ use App\Controller\VerifyEmail;
             routeName: 'reset_password',
             name: 'resetPassword',
         ),
-        new Get(security: 'is_granted("ROLE_ADMIN")'),
+        new Get(security: 'is_granted("ROLE_ADMIN") or object == user'),
         new Put(processor: UserPasswordHasher::class),
         new Patch(processor: UserPasswordHasher::class),
         new Delete(),
