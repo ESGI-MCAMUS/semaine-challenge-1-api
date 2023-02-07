@@ -34,12 +34,12 @@ use App\Controller\VerifyEmail;
             name: 'verifyEmail',
         ),
         new Post(
-            name: 'askResetPassword',
             routeName: 'ask_reset_password',
+            name: 'askResetPassword',
         ),
         new Post(
-            name: 'resetPassword',
             routeName: 'reset_password',
+            name: 'resetPassword',
         ),
         new Get(security: 'is_granted("ROLE_ADMIN")'),
         new Put(processor: UserPasswordHasher::class),
@@ -48,6 +48,7 @@ use App\Controller\VerifyEmail;
     ],
     normalizationContext: ['groups' => ['user:read']],
     denormalizationContext: ['groups' => ['user:create', 'user:update']],
+    paginationEnabled: false,
 )]
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
