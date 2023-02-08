@@ -34,6 +34,10 @@ use App\Controller\VerifyEmail;
             name: 'verifyEmail',
         ),
         new Post(
+            routeName: 'filter_messages',
+            name: 'filterMessages',
+        ),
+        new Post(
             routeName: 'ask_reset_password',
             name: 'askResetPassword',
         ),
@@ -197,8 +201,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface {
         return array_unique($roles);
     }
 
-    public function setRoles(array $roles): self
-    {
+    public function setRoles(array $roles): self {
         $this->roles = $roles;
 
         return $this;
