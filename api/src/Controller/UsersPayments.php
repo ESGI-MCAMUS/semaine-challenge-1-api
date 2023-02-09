@@ -36,7 +36,7 @@ class UsersPayments extends AbstractController {
 
   public function __invoke(): Response {
     $user = $this->security->getUser();
-    $payments = $this->paymentsRepository->findBy(['debited_user_id' => $user->getId()]);
+    $payments = $this->paymentsRepository->findBy(['debited_user' => $user->getId()]);
 
     return $this->json(['payments' => $payments]);
   }
