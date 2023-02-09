@@ -61,13 +61,13 @@ class HousingProperties {
     #[ORM\Column(length: 255)]
     private ?string $classification = null;
 
-    #[ORM\Column(nullable: true, type: "datetime", options: ["default" => "CURRENT_TIMESTAMP"])]
+    #[ORM\Column(type: "datetime", nullable: true, options: ["default" => "CURRENT_TIMESTAMP"])]
     private ?\DateTimeImmutable $createdAt;
 
-    #[ORM\Column(nullable: true, type: "datetime", options: ["default" => "CURRENT_TIMESTAMP"])]
+    #[ORM\Column(type: "datetime", nullable: true, options: ["default" => "CURRENT_TIMESTAMP"])]
     private ?\DateTimeImmutable $updatedAt;
 
-    #[ORM\Column(nullable: true, type: "datetime")]
+    #[ORM\Column(type: "datetime", nullable: true)]
     private ?\DateTimeImmutable $deletedAt;
 
     public function getId(): ?int {
