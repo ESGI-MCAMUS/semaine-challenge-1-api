@@ -18,6 +18,10 @@ use ApiPlatform\Metadata\Get;
         new Post(
             routeName: 'update_payment_status',
             name: 'updatePaymentStatus',
+        ),
+        new Post(
+            routeName: 'get_payements',
+            name: 'getPayements',
         )
     ]
 )]
