@@ -41,7 +41,7 @@ class CreatePayment extends AbstractController {
 
   #[Route(
     name: 'create_payment',
-    path: '/payements/create/{housing}',
+    path: '/payments/create/{housing}',
     methods: ['POST'],
     defaults: [
       '_api_operation_name' => '_api_/payments/create/{housing}',

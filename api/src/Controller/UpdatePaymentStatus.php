@@ -21,7 +21,7 @@ class UpdatePaymentStatus extends AbstractController {
 
   #[Route(
     name: 'update_payment_status',
-    path: '/payements/{status}/{id}/{token}',
+    path: '/payments/{status}/{id}/{token}',
     methods: ['POST'],
     defaults: [
       '_api_operation_name' => '_api_/payments/{status}/{id}/{token}',
