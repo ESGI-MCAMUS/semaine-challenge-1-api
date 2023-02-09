@@ -30,29 +30,29 @@ class Housing {
     #[ORM\Column(length: 255)]
     private ?string $city = null;
 
-    #[ORM\Column]
+    #[ORM\Column (nullable: true)]
     private ?float $lat = null;
 
-    #[ORM\Column]
+    #[ORM\Column (nullable: true)]
     private ?float $lng = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255 , nullable: true)]
     private ?string $door = null;
 
     #[ORM\Column]
     private ?int $floor = null;
 
-    #[ORM\Column(nullable: true, type: "datetime", options: ["default" => "CURRENT_TIMESTAMP"])]
+    #[ORM\Column(type: "datetime", nullable: true, options: ["default" => "CURRENT_TIMESTAMP"])]
     private ?\DateTimeImmutable $createdAt;
 
-    #[ORM\Column(nullable: true, type: "datetime", options: ["default" => "CURRENT_TIMESTAMP"])]
+    #[ORM\Column(type: "datetime", nullable: true, options: ["default" => "CURRENT_TIMESTAMP"])]
     private ?\DateTimeImmutable $updatedAt;
 
-    #[ORM\Column(nullable: true, type: "datetime")]
+    #[ORM\Column(type: "datetime", nullable: true)]
     private ?\DateTimeImmutable $deletedAt;
 
-    #[ORM\OneToOne(cascade: ['persist', 'remove'], targetEntity: HousingProperties::class)]
-    #[ORM\JoinColumn(nullable: false, referencedColumnName: 'id', name: 'properties_id')]
+    #[ORM\OneToOne(targetEntity: HousingProperties::class, cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(name: 'properties_id', referencedColumnName: 'id', nullable: false)]
     private ?HousingProperties $properties = null;
 
     #[ORM\ManyToOne(inversedBy: 'housings')]
