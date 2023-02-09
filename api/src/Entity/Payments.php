@@ -5,9 +5,22 @@ namespace App\Entity;
 use ApiPlatform\Metadata\ApiResource;
 use App\Repository\PaymentsRepository;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Get;
 
 #[ORM\Entity(repositoryClass: PaymentsRepository::class)]
-#[ApiResource]
+#[ApiResource(
+    operations: [
+        new Post(
+            routeName: 'create_payment',
+            name: 'createPayments',
+        ),
+        new Post(
+            routeName: 'update_payment_status',
+            name: 'updatePaymentStatus',
+        )
+    ]
+)]
 class Payments {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -29,13 +42,16 @@ class Payments {
     private ?string $status = null;
 
     #[ORM\Column(type: "datetime", options: ["default" => "CURRENT_TIMESTAMP"])]
-    private ?\DateTimeImmutable $createdAt;
+    private $createdAt;
 
     #[ORM\Column(type: "datetime", options: ["default" => "CURRENT_TIMESTAMP"])]
-    private ?\DateTimeImmutable $updatedAt;
+    private $updatedAt;
 
     #[ORM\Column(nullable: true, type: "datetime")]
-    private ?\DateTimeImmutable $deletedAt;
+    private $deletedAt;
+
+    #[ORM\Column(length: 255)]
+    private ?string $token = null;
 
     public function getId(): ?int {
         return $this->id;
@@ -81,32 +97,42 @@ class Payments {
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeImmutable {
+    public function getCreatedAt() {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $createdAt): self {
+    public function setCreatedAt($createdAt): self {
         $this->createdAt = $createdAt;
 
         return $this;
     }
 
-    public function getUpdatedAt(): ?\DateTimeImmutable {
+    public function getUpdatedAt() {
         return $this->updatedAt;
     }
 
-    public function setUpdatedAt(\DateTimeImmutable $updatedAt): self {
+    public function setUpdatedAt($updatedAt): self {
         $this->updatedAt = $updatedAt;
 
         return $this;
     }
 
-    public function getDeletedAt(): ?\DateTimeImmutable {
+    public function getDeletedAt() {
         return $this->deletedAt;
     }
 
-    public function setDeletedAt(?\DateTimeImmutable $deletedAt): self {
+    public function setDeletedAt($deletedAt): self {
         $this->deletedAt = $deletedAt;
+
+        return $this;
+    }
+
+    public function getToken(): ?string {
+        return $this->token;
+    }
+
+    public function setToken(string $token): self {
+        $this->token = $token;
 
         return $this;
     }
