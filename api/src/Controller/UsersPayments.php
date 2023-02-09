@@ -25,12 +25,12 @@ class UsersPayments extends AbstractController {
   }
 
   #[Route(
-    name: 'get_payements',
-    path: '/payements/get',
+    name: 'get_payments',
+    path: '/payments/get',
     methods: ['POST'],
     defaults: [
-      '_api_operation_name' => '_api_/payements/get',
-      '_api_description' => 'Get user payements',
+      '_api_operation_name' => '_api_/payments/get',
+      '_api_description' => 'Get user payments',
     ],
   )]
 
