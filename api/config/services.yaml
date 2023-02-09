@@ -49,6 +49,15 @@ services:
     App\Controller\FilterMessages\:
         resource: "../src/Controller/FilterMessages.php"
         tags: ["controller.service_arguments"]
+    App\Controller\CreatePayment\:
+        resource: "../src/Controller/CreatePayment.php"
+        tags: ["controller.service_arguments"]
+    App\Controller\UpdatePaymentStatus\:
+        resource: "../src/Controller/UpdatePaymentStatus.php"
+        tags: ["controller.service_arguments"]
+    App\Controller\UsersPayments\:
+        resource: "../src/Controller/UsersPayments.php"
+        tags: ["controller.service_arguments"]
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
