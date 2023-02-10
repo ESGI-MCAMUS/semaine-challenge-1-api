@@ -1,6 +1,7 @@
 <?php
 
-use App\Entity\User;
+namespace App\Controller;
+
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -27,7 +28,7 @@ class CreateAppointment extends AbstractController
             '_api_description' => 'Create Appointment',
         ],
     )]
-    public function __invoke(string $token): Response
+    public function __invoke(): Response
     {
 //        $user = $this->userRepository->findOneBy(['emailToken' => $token]);
 //        if (!$user) {
@@ -37,6 +38,6 @@ class CreateAppointment extends AbstractController
 //        $user->setIsActive(true);
 //        $this->userRepository->save($user, true);
 //        return $this->json($user);
-        return $this->json(['pouet' => 'test controller']);
+        return $this->json(['pouet' => 'test controller'], 400);
     }
 }
