@@ -46,6 +46,7 @@ class UpdatePaymentStatus extends AbstractController {
 
     // Set the payment status to failed
     $payment->setStatus($status);
+    $payment->setUpdatedAt(new \DateTime());
 
     // Save the payment
     $this->paymentsRepository->save($payment, true);
