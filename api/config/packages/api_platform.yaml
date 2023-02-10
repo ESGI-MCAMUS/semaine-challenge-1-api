@@ -13,3 +13,6 @@ api_platform:
             JWT:
                 name: Authorization
                 type: header
+    patch_formats:
+        json: [ 'application/merge-patch+json' ]
+        jsonapi: [ 'application/vnd.api+json' ]
