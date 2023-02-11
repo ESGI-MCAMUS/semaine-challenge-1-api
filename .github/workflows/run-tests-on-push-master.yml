@@ -11,6 +11,13 @@ jobs:
     steps:
       - name: 📥 Checkout
         uses: actions/checkout@v2
+      - name: ⚙️ Create .env file
+        env:
+          ENV_FILE: ${{ secrets.ENV_CI }}
+        run: |
+          cd api
+          echo "$ENV_FILE" >> .env
+          cd ..
       - name: 🐳 Build Docker Container
         run: docker compose build --pull --no-cache
       - name: 🐳 Launch Docker Container
