@@ -1,8 +1,7 @@
 api_platform:
-    title: Hello API Platform
+    title: Semaine Challenge 1
     version: 1.0.0
     # Mercure integration, remove if unwanted
-    mercure: ~
     # Good cache defaults for REST APIs
     defaults:
         stateless: true
@@ -16,3 +15,9 @@ api_platform:
     patch_formats:
         json: ["application/merge-patch+json"]
         jsonapi: ["application/vnd.api+json"]
+    enable_swagger: true
+    enable_swagger_ui: true
+    enable_docs: false
+    enable_entrypoint: false
+    mercure:
+        enabled: false
