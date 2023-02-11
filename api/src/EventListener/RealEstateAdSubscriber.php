@@ -38,10 +38,10 @@ class RealEstateAdSubscriber implements EventSubscriberInterface {
       // Upload photos to Imgur
       foreach ($photos as $photo) {
         $imgurResponse = $this->imgur->upload($photo);
-        array_push($imgurDocuments, $imgurResponse);
+        array_push($imgurPhotos, $imgurResponse);
       }
 
-      $object->setPhotos($imgurDocuments);
+      $object->setPhotos($imgurPhotos);
       $object->setCreatedAt(new \DateTime());
       $object->setUpdatedAt(new \DateTime());
     }
