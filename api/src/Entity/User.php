@@ -47,7 +47,7 @@ use App\Controller\VerifyEmail;
         ),
         new Get(security: 'is_granted("ROLE_ADMIN") or object == user'),
         new Put(processor: UserPasswordHasher::class),
-        new Patch(processor: UserPasswordHasher::class),
+        new Patch(),
         new Delete(),
     ],
     normalizationContext: ['groups' => ['user:read']],
@@ -79,6 +79,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface {
 
     #[ORM\Column(type: 'json')]
     private array $roles = ['ROLE_USER'];
+
+
+    #[ORM\Column(type: "boolean", nullable: true)]
+    #[Groups(['user:read', 'user:update'])]
+    private ?bool $isActive = false;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     #[Groups(['user:read', 'user:create', 'user:update'])]
@@ -139,9 +144,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface {
     #[Groups(['user:read'])]
     private Collection $favoriteAds;
 
-    #[ORM\Column(type: "boolean", options: ["default" => false], nullable: true)]
-    #[Groups(['user:read'])]
-    private ?bool $is_active = false;
 
     public function __construct() {
         $this->realEstateAds = new ArrayCollection();
@@ -483,11 +485,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface {
     }
 
     public function isIsActive(): ?bool {
-        return $this->is_active;
+        return $this->isActive;
     }
 
-    public function setIsActive(bool $is_active): self {
-        $this->is_active = $is_active;
+    public function setIsActive(bool $isActive): self {
+        $this->isActive = $isActive;
 
         return $this;
     }
