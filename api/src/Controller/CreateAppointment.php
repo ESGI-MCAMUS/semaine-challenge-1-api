@@ -7,16 +7,19 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\AsController;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Security;
 
 #[AsController]
 class CreateAppointment extends AbstractController
 {
 
     private UserRepository $userRepository;
+    private Security $security;
 
-    public function __construct(UserRepository $userRepository)
+    public function __construct(Security $security, UserRepository $userRepository)
     {
         $this->userRepository = $userRepository;
+        $this->security = $security;
     }
 
     #[Route(
@@ -28,16 +31,25 @@ class CreateAppointment extends AbstractController
             '_api_description' => 'Create Appointment',
         ],
     )]
-    public function __invoke(): Response
+    public function __invoke($housingId): Response
     {
-//        $user = $this->userRepository->findOneBy(['emailToken' => $token]);
-//        if (!$user) {
-//            return $this->json(['message' => 'Invalid token'], 400);
-//        }
-//        $user->setToken(null);
-//        $user->setIsActive(true);
-//        $this->userRepository->save($user, true);
-//        return $this->json($user);
-        return $this->json(['pouet' => 'test controller'], 400);
+        $user = $this->security->getUser();
+
+        if (!$user) {
+            return $this->json([
+                'error' => 'User not logged in',
+            ], 403);
+        }
+
+        $appointments = $this->userRepository->find($user->getId())->getAppointments();
+        foreach ($appointments as $appointment) {
+            if ($appointment->getHousing()->getId() == $housingId) {
+                return $this->json([
+                    'error' => 'User already has an appointment for this housing',
+                ], 400);
+            }
+        }
+
+        return $this->json(['appointments' => $appointments, "housing", $housingId], 200);
     }
 }
