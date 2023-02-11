@@ -18,6 +18,9 @@ jobs:
           DB_PASSWORD: ${{ secrets.DB_PASSWORD_DEV }}
           JWT_PASSPHRASE: ${{ secrets.JWT_PASSPHRASE }}
           MAILER_API: ${{ secrets.MAILER_API }}
+          STRIPE_API_KEY: ${{ secrets.STRIPE_API_KEY }}
+          IMGUR_CLIENT_ID: ${{ secrets.IMGUR_CLIENT_ID }}
+          IMGUR_CLIENT_SECRET: ${{ secrets.IMGUR_CLIENT_SECRET }}
         run: |
           cd api 
           echo "DATABASE_URL='postgresql://$DB_USER:$DB_PASSWORD@$DB_HOST:5432/$DB_NAME?serverVersion=13&charset=utf8'" >> .env.dev
@@ -34,6 +37,9 @@ jobs:
           echo "TRUSTED_HOSTS=api.challenge-dev.mistergooddeal.org" >> .env.dev
           echo "MAILER_API=$MAILER_API" >> .env.dev
           echo "FRONT_URL=https://challenge-dev.mistergooddeal.org" >> .env.dev
+          echo "STRIPE_API_KEY=$STRIPE_API_KEY" >> .env.dev
+          echo "IMGUR_CLIENT_ID=$IMGUR_CLIENT_ID" >> .env.dev
+          echo "IMGUR_CLIENT_SECRET=$IMGUR_CLIENT_SECRET" >> .env.dev
           mv .env.dev .env
           cd ..
       - name: ⚙️ Generating .htaccess for the server
