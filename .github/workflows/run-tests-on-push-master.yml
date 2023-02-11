@@ -1,0 +1,19 @@
+name: 🧪 Launch Docker Container and run tests
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 Checkout
+        uses: actions/checkout@v2
+      - name: 🐳 Build Docker Container
+        run: docker-compose build
+      - name: 🐳 Launch Docker Container
+        run: docker-compose up -d
+      - name: 🔉 Log Docker Container
+        run: docker ps
