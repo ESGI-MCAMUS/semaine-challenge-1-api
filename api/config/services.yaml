@@ -37,6 +37,12 @@ services:
     App\EventListener\UserSubscriber:
         tags:
             - { name: doctrine.event_subscriber }
+    App\EventListener\RealEstateAdSubscriber:
+        tags:
+            - { name: doctrine.event_subscriber }
+    App\EventListener\DocumentsSubscriber:
+        tags:
+            - { name: doctrine.event_subscriber }
     App\Controller\VerifyEmail\:
         resource: "../src/Controller/VerifyEmail.php"
         tags: ["controller.service_arguments"]

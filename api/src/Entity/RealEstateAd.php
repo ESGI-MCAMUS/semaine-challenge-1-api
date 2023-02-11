@@ -47,13 +47,13 @@ class RealEstateAd {
     private ?bool $isVisible = null;
 
     #[ORM\Column(type: "datetime", nullable: true, options: ["default" => "CURRENT_TIMESTAMP"])]
-    private ?\DateTimeImmutable $createdAt;
+    private  $createdAt;
 
     #[ORM\Column(type: "datetime", nullable: true, options: ["default" => "CURRENT_TIMESTAMP"])]
-    private ?\DateTimeImmutable $updatedAt;
+    private  $updatedAt;
 
     #[ORM\Column(type: "datetime", nullable: true)]
-    private ?\DateTimeImmutable $deletedAt;
+    private  $deletedAt;
 
     public function getId(): ?int {
         return $this->id;
@@ -139,31 +139,31 @@ class RealEstateAd {
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeImmutable {
+    public function getCreatedAt() {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $createdAt): self {
+    public function setCreatedAt($createdAt): self {
         $this->createdAt = $createdAt;
 
         return $this;
     }
 
-    public function getUpdatedAt(): ?\DateTimeImmutable {
+    public function getUpdatedAt() {
         return $this->updatedAt;
     }
 
-    public function setUpdatedAt(\DateTimeImmutable $updatedAt): self {
+    public function setUpdatedAt($updatedAt): self {
         $this->updatedAt = $updatedAt;
 
         return $this;
     }
 
-    public function getDeletedAt(): ?\DateTimeImmutable {
+    public function getDeletedAt() {
         return $this->deletedAt;
     }
 
-    public function setDeletedAt(?\DateTimeImmutable $deletedAt): self {
+    public function setDeletedAt($deletedAt): self {
         $this->deletedAt = $deletedAt;
 
         return $this;
