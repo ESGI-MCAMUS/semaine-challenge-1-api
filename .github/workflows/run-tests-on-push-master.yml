@@ -3,7 +3,7 @@ name: 🧪 Launch Docker Container and run tests
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   build:
