@@ -12,7 +12,7 @@ jobs:
       - name: 📥 Checkout
         uses: actions/checkout@v2
       - name: 🐳 Build Docker Container
-        run: docker-compose build
+        run: docker compose build --pull --no-cache
       - name: 🐳 Launch Docker Container
         run: docker-compose up -d
       - name: 🔉 Log Docker Container
