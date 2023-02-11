@@ -23,6 +23,7 @@ class DocumentsSubscriber implements EventSubscriberInterface {
   public function getSubscribedEvents(): array {
     return [
       Events::prePersist,
+      Events::preUpdate,
     ];
   }
 
@@ -43,6 +44,26 @@ class DocumentsSubscriber implements EventSubscriberInterface {
 
       $object->setDocuments($imgurDocuments);
       $object->setCreatedAt(new \DateTime());
+      $object->setUpdatedAt(new \DateTime());
+    }
+  }
+
+  public function preUpdate(LifecycleEventArgs $args): void {
+    $object = $args->getObject();
+
+    /** @var Documents $object */
+    if ($object instanceof Documents) {
+      $documents = $object->getDocuments();
+
+      $imgurDocuments = array();
+
+      // Upload documents to Imgur
+      foreach ($documents as $document) {
+        $imgurResponse = $this->imgur->upload($document);
+        array_push($imgurDocuments, $imgurResponse);
+      }
+
+      $object->setDocuments($imgurDocuments);
       $object->setUpdatedAt(new \DateTime());
     }
   }
