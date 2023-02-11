@@ -12,6 +12,7 @@
         "doctrine/orm": "^2.12",
         "fakerphp/faker": "^1.21",
         "guzzlehttp/guzzle": "^7.4",
+        "j0k3r/php-imgur-api-client": "^4.0",
         "lexik/jwt-authentication-bundle": "^2.6",
         "nelmio/cors-bundle": "^2.2",
         "phpdocumentor/reflection-docblock": "^5.3",
