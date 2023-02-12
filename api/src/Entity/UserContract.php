@@ -5,9 +5,12 @@ namespace App\Entity;
 use ApiPlatform\Metadata\ApiResource;
 use App\Repository\UserContractRepository;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Metadata\Post;
 
 #[ORM\Entity(repositoryClass: UserContractRepository::class)]
-#[ApiResource]
+#[ApiResource(operations: [
+    new Post(),
+])]
 class UserContract {
     #[ORM\Id]
     #[ORM\GeneratedValue]

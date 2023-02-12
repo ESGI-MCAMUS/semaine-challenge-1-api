@@ -7,11 +7,20 @@ use App\Repository\FavoriteAdRepository;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Metadata\ApiFilter;
+use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
 
 
 
 #[ORM\Entity(repositoryClass: FavoriteAdRepository::class)]
-#[ApiResource]
+#[ApiResource(
+    operations: [
+        new Post(),
+        new Get(),
+        new GetCollection(),
+    ]
+)]
 #[ApiFilter(SearchFilter::class, properties: ['fk_user' => 'exact'])]
 class FavoriteAd {
     #[ORM\Id]

@@ -6,9 +6,12 @@ use ApiPlatform\Metadata\ApiResource;
 use App\Repository\MessagesRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Metadata\Post;
 
 #[ORM\Entity(repositoryClass: MessagesRepository::class)]
-#[ApiResource]
+#[ApiResource(operations: [
+    new Post(),
+])]
 class Messages {
     #[ORM\Id]
     #[ORM\GeneratedValue]

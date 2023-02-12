@@ -7,9 +7,18 @@ use App\Repository\HousingPropertiesRepository;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Metadata\ApiFilter;
+use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Patch;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
 
 #[ORM\Entity(repositoryClass: HousingPropertiesRepository::class)]
-#[ApiResource(paginationClientEnabled: true)]
+#[ApiResource(paginationClientEnabled: true, operations: [
+    new Post(),
+    new Get(),
+    new GetCollection(),
+    new Patch(),
+])]
 #[ApiFilter(SearchFilter::class, properties: [
     'type' => 'exact',
     'rooms' => 'exact',

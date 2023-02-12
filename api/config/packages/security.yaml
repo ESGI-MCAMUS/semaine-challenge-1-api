@@ -29,25 +29,81 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        - { path: ^/$, roles: PUBLIC_ACCESS } # Allows accessing the Swagger UI
-        - { path: ^/docs, roles: PUBLIC_ACCESS } # Allows accessing the Swagger UI docs
-        - { path: ^/auth, roles: PUBLIC_ACCESS } # Allow user login
-        - { path: ^/housing_properties, roles: PUBLIC_ACCESS, methods: [GET] } # Allow public access to housing list
-        - { path: ^/housings, roles: PUBLIC_ACCESS, methods: [GET] } # Allow public access to housing list
-        - { path: ^/real_estate_ads, roles: PUBLIC_ACCESS, methods: [GET] } # Allow public access to real estate ads list
-        - { path: ^/users, roles: PUBLIC_ACCESS, methods: [POST] } # Allow user registration
-        - { path: ^/users/reset-password, roles: PUBLIC_ACCESS } # Allow user reset password
+        # PRODUCTION SPECIFIC
+        - { path: ^/, roles: PUBLIC_ACCESS } # Allows accessing the Swagger UI
+        - { path: ^/admin, roles: PUBLIC_ACCESS } # Allows accessing the Swagger UI
+        - { path: ^/.well-known/mercure/ui/, roles: PUBLIC_ACCESS } # Allows accessing the Swagger UI
+        - { path: ^/docs, roles: PUBLIC_ACCESS } # Allows accessing the Swagger UI
+        # GLOBAL SECURITY
+        # Appointments
+        - {
+              path: ^/appointments$,
+              roles: IS_AUTHENTICATED_FULLY,
+              methods: [POST, GET, DELETE],
+          }
+        # Token & login
+        - { path: ^/auth, roles: PUBLIC_ACCESS }
+        # Documents
+        - {
+              path: ^/documents,
+              roles: IS_AUTHENTICATED_FULLY,
+              methods: [POST, PATCH, PUT],
+          }
+        # FavoriteAd
         - {
               path: ^/favorite_ads,
               roles: IS_AUTHENTICATED_FULLY,
-              methods: [POST, GET, DELETE],
-          } # Allow user to add favorite ad
+              methods: [POST, GET],
+          }
+        # Housing Properties
         - {
-              path: ^/payments/create,
+              path: ^/housing_properties,
+              roles: IS_AUTHENTICATED_FULLY,
+              methods: [POST, PATCH],
+          }
+        - { path: ^/housing_properties, roles: PUBLIC_ACCESS, methods: [GET] }
+        # Housings
+        - {
+              path: ^/housings,
+              roles: IS_AUTHENTICATED_FULLY,
+              methods: [POST, PATCH],
+          }
+        - { path: ^/housings, roles: PUBLIC_ACCESS, methods: [GET] }
+        # Messages
+        - { path: ^/messages, roles: IS_AUTHENTICATED_FULLY, methods: [POST] }
+        # Payments
+        - { path: ^/payments, roles: IS_AUTHENTICATED_FULLY, methods: [POST] }
+        # Real Estate Ads
+        - {
+              path: ^/real_estate_ads,
+              roles: IS_AUTHENTICATED_FULLY,
+              methods: [POST, PATCH],
+          }
+        - { path: ^/real_estate_ads, roles: PUBLIC_ACCESS, methods: [GET] }
+        # UserContracts
+        - {
+              path: ^/user_contracts,
               roles: IS_AUTHENTICATED_FULLY,
               methods: [POST],
-          } # Allow user to add favorite ad
-        - { path: ^/, roles: IS_AUTHENTICATED_FULLY }
+          }
+        # Users
+        - {
+              path: ^/users,
+              roles: IS_AUTHENTICATED_FULLY,
+              methods: [GET, PATCH],
+          }
+        - { path: ^/users, roles: PUBLIC_ACCESS, methods: [POST] }
+        - {
+              path: ^/users/reset-password,
+              roles: PUBLIC_ACCESS,
+              methods: [POST],
+          }
+        - {
+              path: ^/users/reset-password/email,
+              roles: PUBLIC_ACCESS,
+              methods: [POST],
+          }
+        - { path: ^/users/verify/$, roles: PUBLIC_ACCESS, methods: [POST] }
 
 when@test:
     security:

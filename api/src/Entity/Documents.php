@@ -5,9 +5,18 @@ namespace App\Entity;
 use ApiPlatform\Metadata\ApiResource;
 use App\Repository\DocumentsRepository;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Patch;
+use ApiPlatform\Metadata\Put;
 
 #[ORM\Entity(repositoryClass: DocumentsRepository::class)]
-#[ApiResource]
+#[ApiResource(
+    operations: [
+        new Post(),
+        new Put(),
+        new Patch(),
+    ]
+)]
 class Documents {
     #[ORM\Id]
     #[ORM\GeneratedValue]

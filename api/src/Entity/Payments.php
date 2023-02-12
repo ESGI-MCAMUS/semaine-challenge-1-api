@@ -6,7 +6,6 @@ use ApiPlatform\Metadata\ApiResource;
 use App\Repository\PaymentsRepository;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Metadata\Post;
-use ApiPlatform\Metadata\Get;
 
 #[ORM\Entity(repositoryClass: PaymentsRepository::class)]
 #[ApiResource(

@@ -8,9 +8,18 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Metadata\ApiFilter;
+use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Patch;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
 
 #[ORM\Entity(repositoryClass: RealEstateAdRepository::class)]
-#[ApiResource(paginationItemsPerPage: 10, paginationClientEnabled: true)]
+#[ApiResource(paginationItemsPerPage: 10, paginationClientEnabled: true, operations: [
+    new Post(),
+    new Get(),
+    new GetCollection(),
+    new Patch(),
+])]
 #[ApiFilter(SearchFilter::class, properties: [
     'title' => 'partial',
 ])]

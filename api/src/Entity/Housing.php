@@ -7,11 +7,19 @@ use App\Repository\HousingRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Serializer\Annotation\Groups;
 
+use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Patch;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
 
 #[ORM\Entity(repositoryClass: HousingRepository::class)]
-#[ApiResource]
+#[ApiResource(operations: [
+    new Post(),
+    new Get(),
+    new GetCollection(),
+    new Patch(),
+])]
 class Housing {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -30,13 +38,13 @@ class Housing {
     #[ORM\Column(length: 255)]
     private ?string $city = null;
 
-    #[ORM\Column (nullable: true)]
+    #[ORM\Column(nullable: true)]
     private ?float $lat = null;
 
-    #[ORM\Column (nullable: true)]
+    #[ORM\Column(nullable: true)]
     private ?float $lng = null;
 
-    #[ORM\Column(length: 255 , nullable: true)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $door = null;
 
     #[ORM\Column]
