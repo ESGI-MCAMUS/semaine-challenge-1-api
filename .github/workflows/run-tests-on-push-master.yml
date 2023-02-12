@@ -25,6 +25,6 @@ jobs:
       - name: 🐳 Launch Docker Container
         run: docker-compose up -d
       - name: 🗃️ Setup the database
-        run: docker-compose exec php bin/console doctrine:migrations:migrate
+        run: docker-compose exec -T php bin/console doctrine:migrations:migrate
       - name: 🧪 Run fixtures
-        run: docker-compose exec php bin/console doctrine:fixtures:load --no-interaction
+        run: docker-compose exec -T php bin/console doctrine:fixtures:load --no-interaction
