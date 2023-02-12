@@ -26,6 +26,9 @@ jobs:
         run: docker-compose up -d
       - name: ⚙️ Setup Composer
         run: |
+          cd api
+          rm -rf vendor
+          rm -rf composer.lock
           docker-compose exec -T php composer install
           docker-compose exec -T php composer require symfony/runtime
       - name: 🗃️ Setup the database
