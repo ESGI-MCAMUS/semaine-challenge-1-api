@@ -46,7 +46,7 @@ use App\Controller\VerifyEmail;
             name: 'resetPassword',
         ),
         new Get(security: 'is_granted("ROLE_ADMIN") or object == user'),
-        new Put(processor: UserPasswordHasher::class),
+        new Put(),
         new Patch(),
         new Delete(),
     ],

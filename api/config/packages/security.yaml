@@ -90,7 +90,7 @@ security:
         - {
               path: ^/users$,
               roles: IS_AUTHENTICATED_FULLY,
-              methods: [GET, PATCH],
+              methods: [GET, PATCH, PUT],
           }
         - { path: ^/users, roles: PUBLIC_ACCESS, methods: [POST] }
         - {
