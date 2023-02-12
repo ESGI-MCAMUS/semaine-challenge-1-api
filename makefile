@@ -32,3 +32,6 @@ bdd:
 
 build:
 	docker-compose build --pull --no-cache
+
+resetDb:
+	docker-compose exec php bin/console doctrine:schema:drop --force && docker-compose exec php bin/console doctrine:schema:create && docker-compose exec php bin/console doctrine:fixtures:load --no-interaction
