@@ -21,7 +21,6 @@ class AppointmentSubscriber implements EventSubscriberInterface {
   public function getSubscribedEvents(): array {
     return [
       Events::prePersist,
-      Events::preUpdate,
     ];
   }
 
