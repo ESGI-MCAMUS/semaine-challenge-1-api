@@ -8,10 +8,12 @@ use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Put;
+use ApiPlatform\Metadata\Get;
 
 #[ORM\Entity(repositoryClass: DocumentsRepository::class)]
 #[ApiResource(
     operations: [
+        new Get(),
         new Post(),
         new Put(),
         new Patch(),
