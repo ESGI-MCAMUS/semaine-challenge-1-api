@@ -87,11 +87,8 @@ security:
               methods: [POST],
           }
         # Users
-        - {
-              path: ^/users$,
-              roles: IS_AUTHENTICATED_FULLY,
-              methods: [GET, PATCH, PUT],
-          }
+        - { path: ^/users$, roles: IS_AUTHENTICATED_FULLY, methods: [GET] }
+        - { path: ^/users$, roles: ROLE_ADMIN, methods: [PATCH, PUT] }
         - { path: ^/users, roles: PUBLIC_ACCESS, methods: [POST] }
         - {
               path: ^/users/reset-password,
