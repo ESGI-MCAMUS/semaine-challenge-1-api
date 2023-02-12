@@ -47,7 +47,7 @@ class UserFixtures extends Fixture {
 
         for ($i = 0; $i < 100; $i++) {
             $user = new User();
-            $user->setEmail($faker->email);
+            $user->setEmail($this->generateRandomString() . '@example.com');
             $user->setPassword('$2y$13$Ab1A2/einqjW6NrtAlX8EeBAej4NLTTO1UizZO1ZSiwfYCuBErSv');
             $user->setRoles(['ROLE_OWNER']);
             $user->setFirstname($faker->firstName);
@@ -100,5 +100,16 @@ class UserFixtures extends Fixture {
         }
 
         $manager->flush();
+    }
+
+    // Function that generate random string
+    private function generateRandomString($length = 10) {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $randomString;
     }
 }

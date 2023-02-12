@@ -11,29 +11,32 @@ class SendinblueMailer {
   }
 
   public function sendEmail(User $to, array $params = []): void {
-
     $client = new Client();
 
-    $headers = [
-      'api-key' => $_ENV['MAILER_API'],
-      'Content-Type' => 'application/json',
-      'accept' => 'application/json'
-    ];
+    if (strpos($to->getEmail(), '@example.com') === false) {
+      $headers = [
+        'api-key' => $_ENV['MAILER_API'],
+        'Content-Type' => 'application/json',
+        'accept' => 'application/json'
+      ];
 
-    $body = json_encode([
-      'to' =>
-      array([
-        'name' => $to->getFirstname() . ' ' . $to->getLastname(),
-        'email' => $to->getEmail()
-      ]),
-      'templateId' => 5,
-      'params' => $params
-    ]);
+      $body = json_encode([
+        'to' =>
+        array([
+          'name' => $to->getFirstname() . ' ' . $to->getLastname(),
+          'email' => $to->getEmail()
+        ]),
+        'templateId' => 1,
+        'params' => $params
+      ]);
 
-    $response = $client->request('POST', 'https://api.sendinblue.com/v3/smtp/email', [
-      'headers' => $headers,
-      'body' => $body
-    ]);
+      $response = $client->request('POST', 'https://api.sendinblue.com/v3/smtp/email', [
+        'headers' => $headers,
+        'body' => $body
+      ]);
+    } else {
+      return;
+    }
   }
 
   public function sendResetPasswordEmail(User $to, array $params = []): void {
@@ -52,7 +55,7 @@ class SendinblueMailer {
         'name' => $to->getFirstname() . ' ' . $to->getLastname(),
         'email' => $to->getEmail()
       ]),
-      'templateId' => 4,
+      'templateId' => 2,
       'params' => $params
     ]);
 
