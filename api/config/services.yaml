@@ -67,6 +67,9 @@ services:
     App\Controller\UsersPayments\:
         resource: "../src/Controller/UsersPayments.php"
         tags: ["controller.service_arguments"]
+    App\Controller\AppointmentController\:
+        resource: "../src/Controller/AppointmentController.php"
+        tags: [ "controller.service_arguments" ]
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
