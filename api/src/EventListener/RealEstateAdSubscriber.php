@@ -37,8 +37,13 @@ class RealEstateAdSubscriber implements EventSubscriberInterface {
 
       // Upload photos to Imgur
       foreach ($photos as $photo) {
-        $imgurResponse = $this->imgur->upload($photo);
-        array_push($imgurPhotos, $imgurResponse);
+        // Check if photo is a link
+        if (filter_var($photo, FILTER_VALIDATE_URL)) {
+          array_push($imgurPhotos, $photo);
+        } else {
+          $imgurResponse = $this->imgur->upload($photo);
+          array_push($imgurPhotos, $imgurResponse);
+        }
       }
 
       $object->setPhotos($imgurPhotos);
