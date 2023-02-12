@@ -19,6 +19,7 @@ class UserFixtures extends Fixture {
         $admin->setEmail('admin@example.com');
         $admin->setPassword('$2y$13$Ab1A2/einqjW6NrtAlX8EeBAej4NLTTO1UizZO1ZSiwfYCuBErSva');
         $admin->setRoles(['ROLE_ADMIN']);
+        $admin->setIsActive(true);
         $manager->persist($admin);
 
         $owner = new User();
@@ -28,6 +29,7 @@ class UserFixtures extends Fixture {
         $owner->setEmail('owner@example.com');
         $owner->setPassword('$2y$13$7e9DOBlB2IKqX8AZchI.Ze6UveF5XcBUwwTpBaJWo5lfc10BqdRpW');
         $owner->setRoles(['ROLE_OWNER']);
+        $owner->setIsActive(true);
         $manager->persist($owner);
 
         $user = new User();
@@ -37,6 +39,7 @@ class UserFixtures extends Fixture {
         $user->setEmail('user@example.com');
         $user->setPassword('$2y$13$tIws.jl8f3de/iQNUI1O4.24v2E7kPuVIZiY2TgcJkA5E7NNGJQqm');
         $user->setRoles(['ROLE_USER']);
+        $user->setIsActive(true);
         $manager->persist($user);
 
 
@@ -53,6 +56,7 @@ class UserFixtures extends Fixture {
             $user->setFirstname($faker->firstName);
             $user->setLastname($faker->lastName);
             $user->setBirthdate(new \DateTime('1990-01-01'));
+            $user->setIsActive(true);
             $manager->persist($user);
 
             $housingProperties = new HousingProperties();
