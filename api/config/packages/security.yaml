@@ -53,7 +53,7 @@ security:
         - {
               path: ^/favorite_ads,
               roles: IS_AUTHENTICATED_FULLY,
-              methods: [POST, GET],
+              methods: [POST, GET, DELETE],
           }
         # Housing Properties
         - {

@@ -9,6 +9,7 @@ use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\GetCollection;
 
 
@@ -19,6 +20,7 @@ use ApiPlatform\Metadata\GetCollection;
         new Post(),
         new Get(),
         new GetCollection(),
+        new Delete(),
     ]
 )]
 #[ApiFilter(SearchFilter::class, properties: ['fk_user' => 'exact'])]
