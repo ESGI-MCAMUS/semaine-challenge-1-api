@@ -26,7 +26,7 @@ jobs:
           echo "DATABASE_URL='postgresql://$DB_USER:$DB_PASSWORD@$DB_HOST:5432/$DB_NAME?serverVersion=13&charset=utf8'" >> .env.dev
           echo "APP_ENV=dev" >> .env.dev
           echo "APP_SECRET=!ChangeMe!" >> .env.dev
-          echo "CORS_ALLOW_ORIGIN='^https?://(localhost|127\.0\.0\.1)(:[0-9]+)?$'" >> .env.dev
+          echo "CORS_ALLOW_ORIGIN='^https?://(challenge-dev.mistergooddeal.org)(:[0-9]+)?$'" >> .env.dev
           echo "MERCURE_URL=http://caddy/.well-known/mercure" >> .env.dev
           echo "MERCURE_PUBLIC_URL=https://localhost/.well-known/mercure" >> .env.dev
           echo "MERCURE_JWT_SECRET='!ChangeThisMercureHubJWTSecretKey!'" >> .env.dev
