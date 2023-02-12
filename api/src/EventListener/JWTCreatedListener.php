@@ -7,16 +7,14 @@ use App\Repository\UserRepository;
 use Lexik\Bundle\JWTAuthenticationBundle\Event\JWTCreatedEvent;
 use Symfony\Component\HttpFoundation\RequestStack;
 
-class JWTCreatedListener
-{
+class JWTCreatedListener {
     /**
      * @var RequestStack
      */
     private $requestStack;
     private $userRepository;
 
-    public function __construct(RequestStack $requestStack)
-    {
+    public function __construct(RequestStack $requestStack) {
         $this->requestStack = $requestStack;
     }
 
@@ -25,8 +23,7 @@ class JWTCreatedListener
      *
      * @return void
      */
-    public function onJWTCreated(JWTCreatedEvent $event): void
-    {
+    public function onJWTCreated(JWTCreatedEvent $event): void {
 
         $user = $event->getUser();
 
@@ -35,6 +32,7 @@ class JWTCreatedListener
         $payload['role'] = $user->getRoles();
         $payload['firstname'] = $user->getFirstname();
         $payload['lastname'] = $user->getLastname();
+        $payload['isActive'] = $user->getIsActive();
 
         $event->setData($payload);
     }
