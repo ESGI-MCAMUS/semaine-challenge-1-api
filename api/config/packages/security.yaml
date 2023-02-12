@@ -88,7 +88,7 @@ security:
           }
         # Users
         - {
-              path: ^/users,
+              path: ^/users$,
               roles: IS_AUTHENTICATED_FULLY,
               methods: [GET, PATCH],
           }
