@@ -59,14 +59,14 @@ security:
         - {
               path: ^/housing_properties,
               roles: IS_AUTHENTICATED_FULLY,
-              methods: [POST, PATCH],
+              methods: [POST, PATCH, PUT],
           }
         - { path: ^/housing_properties, roles: PUBLIC_ACCESS, methods: [GET] }
         # Housings
         - {
               path: ^/housings,
               roles: IS_AUTHENTICATED_FULLY,
-              methods: [POST, PATCH],
+              methods: [POST, PATCH, PUT],
           }
         - { path: ^/housings, roles: PUBLIC_ACCESS, methods: [GET] }
         # Messages
@@ -75,7 +75,7 @@ security:
         - { path: ^/payments, roles: IS_AUTHENTICATED_FULLY, methods: [POST] }
         # Real Estate Ads
         - {
-              path: ^/real_estate_ads,
+              path: ^/real_estate_ads$,
               roles: IS_AUTHENTICATED_FULLY,
               methods: [POST, PATCH, PUT],
           }

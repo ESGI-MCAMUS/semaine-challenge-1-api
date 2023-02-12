@@ -10,6 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\Patch;
+use ApiPlatform\Metadata\Put;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 
@@ -19,6 +20,7 @@ use ApiPlatform\Metadata\GetCollection;
     new Get(),
     new GetCollection(),
     new Patch(),
+    new Put(),
 ])]
 class Housing {
     #[ORM\Id]
