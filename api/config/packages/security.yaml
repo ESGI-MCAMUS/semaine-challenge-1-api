@@ -77,7 +77,7 @@ security:
         - {
               path: ^/real_estate_ads,
               roles: IS_AUTHENTICATED_FULLY,
-              methods: [POST, PATCH],
+              methods: [POST, PATCH, PUT],
           }
         - { path: ^/real_estate_ads, roles: PUBLIC_ACCESS, methods: [GET] }
         # UserContracts
