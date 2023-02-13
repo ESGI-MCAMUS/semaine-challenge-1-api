@@ -20,7 +20,9 @@ jobs:
           cd ..
       - name: Prepare docker with buildx
         run: echo "export DOCKER_BUILDKIT=1" >> $GITHUB_ENV
+      - uses: satackey/action-docker-layer-caching@v0.0.11
+        continue-on-error: true
       - name: 🐳 Build Docker Container
-        run: docker compose build --pull --no-cache
+        run: docker compose build --pull
       - name: 🐳 Launch Docker Container
         run: docker-compose up -d
